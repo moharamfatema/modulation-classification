@@ -1,8 +1,9 @@
 # Modlation Classification
 
 [![GitHub][github-badge]][github]
-[![License][license-badge]][license]
 [![Kaggle][kaggle-badge]][kaggle]
+[![Binder][binder-badge]][binder]
+[![License][license-badge]][license]
 
 - [Modlation Classification](#modlation-classification)
   - [The Dataset](#the-dataset)
@@ -87,11 +88,14 @@ Learning rate: 0.003
 
 [license]: https://github.com/moharamfatema/modulation-classification/blob/main/COPYING
 
-<!-- [license-badge]: https://img.shields.io/badge/License-GPLv3-blue.svg -->
-
 [license-badge]: https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge
 
 [kaggle]: kaggle.com/fatemamoharam/modulation-classification
 [kaggle-badge]: https://img.shields.io/badge/Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white
 
+[binder-badge]: https://img.shields.io/badge/launch-binder-orange.svg?style=for-the-badge
+
+[binder]: https://mybinder.org/v2/gh/moharamfatema/modulation-classification/main
+
 [cnn-model]: https://github.com/moharamfatema/modulation-classification/blob/main/docs/img/cnn-model.png
+
