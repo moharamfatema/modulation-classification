@@ -947,6 +947,8 @@ weighted avg       0.28      0.31      0.27    360000
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
 - second experiment was used
+
+
 | Parameter           | Value  |
 | ------------------- | ------ |
 | Training loss       | 1.0711 |
