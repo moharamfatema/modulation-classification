@@ -1,42 +1,80 @@
-# Modlation Classification
+# 1. Modlation Classification
 
 [![GitHub][github-badge]][github]
 [![Binder][binder-badge]][binder]
 [![License][license-badge]][license]
 
-- [Modlation Classification](#modlation-classification)
-  - [The Dataset](#the-dataset)
-  - [The Models](#the-models)
-    - [Hyperparameters](#hyperparameters)
-    - [CNN model](#cnn-model)
-      - [Experiment 1](#experiment-1)
-      - [Experiment 2](#experiment-2)
-      - [Experiment 3](#experiment-3)
-      - [Experiment 4](#experiment-4)
-      - [Final Experiment](#final-experiment)
-      - [Differentiated Signal CNN](#differentiated-signal-cnn)
-      - [Integrated Signal](#integrated-signal)
-      - [Combined Features](#combined-features)
-      - [Embedded Features (SNR)](#embedded-features-snr)
-    - [RNN model](#rnn-model)
-      - [Experiment 1](#experiment-1-1)
-      - [Experiment 2](#experiment-2-1)
-      - [Experiment 3](#experiment-3-1)
-      - [Experiment 4](#experiment-4-1)
-      - [Experiment 5](#experiment-5)
-      - [With First Derivative](#with-first-derivative)
-      - [With Integral](#with-integral)
-      - [Combination Raw and Derivative](#combination-raw-and-derivative)
-      - [Combination Raw and Integral](#combination-raw-and-integral)
-      - [Combination Derivative and Integral](#combination-derivative-and-integral)
+- [1. Modlation Classification](#1-modlation-classification)
+  - [1.1. The Dataset](#11-the-dataset)
+    - [1.1.1. Feature spaces](#111-feature-spaces)
+  - [1.2. The Models](#12-the-models)
+    - [1.2.1. Hyperparameters](#121-hyperparameters)
+    - [1.2.2. CNN model](#122-cnn-model)
+      - [1.2.2.1. Experiment 1](#1221-experiment-1)
+      - [1.2.2.2. Experiment 2](#1222-experiment-2)
+      - [1.2.2.3. Experiment 3](#1223-experiment-3)
+      - [1.2.2.4. Experiment 4](#1224-experiment-4)
+      - [1.2.2.5. Final Experiment](#1225-final-experiment)
+      - [1.2.2.6. Differentiated Signal CNN](#1226-differentiated-signal-cnn)
+      - [1.2.2.7. Integrated Signal](#1227-integrated-signal)
+      - [1.2.2.8. Combined Features](#1228-combined-features)
+      - [1.2.2.9. Embedded Features (SNR)](#1229-embedded-features-snr)
+    - [1.2.3. RNN model](#123-rnn-model)
+      - [1.2.3.1. Experiment 1](#1231-experiment-1)
+      - [1.2.3.2. Experiment 2](#1232-experiment-2)
+      - [1.2.3.3. Experiment 3](#1233-experiment-3)
+      - [1.2.3.4. Experiment 4](#1234-experiment-4)
+      - [1.2.3.5. Experiment 5](#1235-experiment-5)
+      - [1.2.3.6. With First Derivative](#1236-with-first-derivative)
+      - [1.2.3.7. With Integral](#1237-with-integral)
+      - [1.2.3.8. Combination Raw and Derivative](#1238-combination-raw-and-derivative)
+      - [1.2.3.9. Combination Raw and Integral](#1239-combination-raw-and-integral)
+      - [1.2.3.10. Combination Derivative and Integral](#12310-combination-derivative-and-integral)
+    - [1.2.4. LSTM model](#124-lstm-model)
+      - [1.2.4.1. Experiment 1](#1241-experiment-1)
+      - [1.2.4.2. Experiment 2](#1242-experiment-2)
+      - [1.2.4.3. Experiment 3 (final version)](#1243-experiment-3-final-version)
+      - [1.2.4.4. With First Derivative](#1244-with-first-derivative)
+      - [1.2.4.5. With Integral](#1245-with-integral)
+      - [1.2.4.6. Combination Raw and Derivative](#1246-combination-raw-and-derivative)
+      - [1.2.4.7. Combination Raw and Integral](#1247-combination-raw-and-integral)
+      - [1.2.4.8. Combination Derivative and Integral](#1248-combination-derivative-and-integral)
+    - [1.2.5. Transformer Encoder Model](#125-transformer-encoder-model)
+      - [1.2.5.1. Hyperparameters](#1251-hyperparameters)
+      - [1.2.5.2. Combination Raw and Derivative](#1252-combination-raw-and-derivative)
+      - [1.2.5.3. Embedding (SNR)](#1253-embedding-snr)
 
-## The Dataset
+## 1.1. The Dataset
 
-<!-- TODO: Talk about the dataset -->
+The RadioML 2016.10 is a dataset of modulated radio signals. The dataset contains 10 different modulations: 8PSK, AM-DSB , BPSK, CPFSK, GFSK, PAM4, QAM16, QAM64, QPSK, and WBFM.
 
-## The Models
+The dataset contains 1 200 000 samples. Each sample is a 2-channel signal with 128 samples per channel.
 
-### Hyperparameters
+An example of a 2-channel signal:
+
+![2-channel signal](img/sig.jpeg)
+
+The dataset contains 120 000 samples per modulation.
+
+The dataset contains 20 SNR levels. Each SNR level contains 60 000 samples per modulation.
+
+The dataset is split into 3 subsets: training, validation, and testing.
+
+Test set is 30 %. The remaining 70 % is split into training and validation sets. The training set is 95 % of the remaining 70 %, and the validation set is 5 % of the remaining 70 %.
+
+### 1.1.1. Feature spaces
+
+An example of a differentiated signal:
+
+ ![Differentiated signal](img/diff.png)
+
+An example of an integrated signal:
+
+  ![Integrated signal](img/int.png)
+
+## 1.2. The Models
+
+### 1.2.1. Hyperparameters
 
 | Hyperparameter | Value      |
 | -------------- | ---------- |
@@ -44,7 +82,7 @@
 | Optimizer      | Adam       |
 | Max epochs     | 100        |
 
-### CNN model
+### 1.2.2. CNN model
 
 ![CNN model][cnn-model]
 
@@ -69,7 +107,7 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-#### Experiment 1
+#### 1.2.2.1. Experiment 1
 
 Learning rate: 0.001
 
@@ -84,7 +122,7 @@ Learning rate: 0.001
 ![Experiment 1](img/exp-1-loss.png)
 ![Experiment 1](img/exp-1-acc.png)
 
-#### Experiment 2
+#### 1.2.2.2. Experiment 2
 
 Learning rate: 0.003
 
@@ -99,7 +137,7 @@ Learning rate: 0.003
 ![Experiment 2](img/exp-2-loss.png)
 ![Experiment 2](img/exp-2-acc.png)
 
-#### Experiment 3
+#### 1.2.2.3. Experiment 3
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.003
@@ -115,7 +153,7 @@ Learning rate: 0.003
 ![Experiment 3](img/exp-3-loss.png)
 ![Experiment 3](img/exp-3-acc.png)
 
-#### Experiment 4
+#### 1.2.2.4. Experiment 4
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -131,7 +169,7 @@ Learning rate: 0.003
 ![Experiment 4](img/exp-4-loss.png)
 ![Experiment 4](img/exp-4-acc.png)
 
-#### Final Experiment
+#### 1.2.2.5. Final Experiment
 
 The hyperparameters of this experiment are then used for all CNN models.
 
@@ -215,7 +253,7 @@ weighted avg       0.55      0.55      0.55    360000
 
 ![png](modulation_classification_cnn/output_41_22.png)
 
-#### Differentiated Signal CNN
+#### 1.2.2.6. Differentiated Signal CNN
 
 | Parameter           | Value  |
 | ------------------- | ------ |
@@ -295,7 +333,7 @@ weighted avg       0.55      0.55      0.55    360000
 
 ![png](modulation_classification_cnn/output_47_22.png)
 
-#### Integrated Signal
+#### 1.2.2.7. Integrated Signal
 
 | Parameter           | Value  |
 | ------------------- | ------ |
@@ -416,7 +454,7 @@ Accuracy at SNR = 8 is 0.8100000023841858 %
 
 ![png](modulation_classification_cnn/output_54_42.png)
 
-#### Combined Features
+#### 1.2.2.8. Combined Features
 
 | Parameter           | Value  |
 | ------------------- | ------ |
@@ -497,7 +535,7 @@ Accuracy at SNR = 8 is 0.8100000023841858 %
 
 ![png](modulation_classification_cnn/output_67_22.png)
 
-#### Embedded Features (SNR)
+#### 1.2.2.9. Embedded Features (SNR)
 
 | Parameter           | Value  |
 | ------------------- | ------ |
@@ -579,7 +617,7 @@ Accuracy at SNR = 8 is 0.8100000023841858 %
 
 ![png](modulation_classification_cnn/output_77_22.png)
 
-### RNN model
+### 1.2.3. RNN model
 
 ```text
 _________________________________________________________________
@@ -597,7 +635,7 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-#### Experiment 1
+#### 1.2.3.1. Experiment 1
 
 Learning rate: 0.001
 
@@ -611,7 +649,7 @@ Learning rate: 0.001
 
 ![Experiment1 RNN](img/exp1-rnn-acc.png)
 
-#### Experiment 2
+#### 1.2.3.2. Experiment 2
 
 Learning rate: 0.0001
 
@@ -625,7 +663,7 @@ Learning rate: 0.0001
 
 ![Experiment2 RNN](img/exp2-rnn-acc.png)
 
-#### Experiment 3
+#### 1.2.3.3. Experiment 3
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.001
@@ -640,7 +678,7 @@ Learning rate: 0.0001
 
 ![Experiment3 RNN](img/exp3-rnn-acc.png)
 
-#### Experiment 4
+#### 1.2.3.4. Experiment 4
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0001
@@ -655,7 +693,7 @@ Learning rate: 0.0001
 
 ![Experiment4 RNN](img/exp4-rnn-acc.png)
 
-#### Experiment 5
+#### 1.2.3.5. Experiment 5
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -671,7 +709,7 @@ Learning rate: 0.0001
 ![Experiment5 RNN](img/exp5-rnn-acc.png)
 ![Experiment5 RNN](img/exp5-rnn-SNRRacc.png)
 
-#### With First Derivative
+#### 1.2.3.6. With First Derivative
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0008
@@ -688,7 +726,7 @@ Learning rate: 0.0001
 ![RNN Derivative](img/rnn-der-acc.png)
 ![RNN Derivative](img/rnn-der-SNRRacc.png)
 
-#### With Integral
+#### 1.2.3.7. With Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -705,7 +743,7 @@ Learning rate: 0.0001
 ![RNN Integral](img/rnn-int-acc.png)
 ![RNN Integral](img/rnn-int-SNRacc.png)
 
-#### Combination Raw and Derivative
+#### 1.2.3.8. Combination Raw and Derivative
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -722,7 +760,7 @@ Learning rate: 0.0001
 ![RNN Raw Derivative](img/rnn-rawdiff-acc.png)
 ![RNN Raw Derivative](img/rnn-rawdiff-SNRacc.png)
 
-#### Combination Raw and Integral
+#### 1.2.3.9. Combination Raw and Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -739,7 +777,7 @@ Learning rate: 0.0001
 ![RNN Raw Integral](img/rnn-rawint-acc.png)
 ![RNN Raw Integral](img/rnn-rawint-SNRacc.png)
 
-#### Combination Derivative and Integral
+#### 1.2.3.10. Combination Derivative and Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -756,26 +794,24 @@ Learning rate: 0.0001
 ![RNN Derivative Integral](img/rnn-diffint-acc.png)
 ![RNN Derivative Integral](img/rnn-diffint-SNRacc.png)
 
+### 1.2.4. LSTM model
 
-
-### LSTM model
-
-
-#### Experiment 1
+#### 1.2.4.1. Experiment 1
 
 ```text
 _________________________________________________________________
-Layer (type)                 Output Shape              Param #   
+Layer (type)                 Output Shape              Param #
 =================================================================
-lstm_1 (LSTM)                (None, 22)                13288     
+lstm_1 (LSTM)                (None, 22)                13288
 _________________________________________________________________
-dense_3 (Dense)              (None, 10)                230       
+dense_3 (Dense)              (None, 10)                230
 =================================================================
 Total params: 13,518
 Trainable params: 13,518
 Non-trainable params: 0
 _________________________________________________________________
 ```
+
 Learning rate scheduler: step decay
 Learning rate: 0.0009
 
@@ -787,23 +823,23 @@ Learning rate: 0.0009
 | Validation accuracy | 0.3837 |
 | Number of epochs    | 100    |
 
-![Experiment1 ](img/lstmexp1.PNG)
+![Experiment1 ](img/lstmexp1.png)
 
-#### Experiment 2
+#### 1.2.4.2. Experiment 2
 
 ```text
 _________________________________________________________________
-Layer (type)                 Output Shape              Param #   
+Layer (type)                 Output Shape              Param #
 =================================================================
-lstm (LSTM)                  (None, 128)               131584    
+lstm (LSTM)                  (None, 128)               131584
 _________________________________________________________________
-dense (Dense)                (None, 64)                8256      
+dense (Dense)                (None, 64)                8256
 _________________________________________________________________
-dense_1 (Dense)              (None, 32)                2080      
+dense_1 (Dense)              (None, 32)                2080
 _________________________________________________________________
-dropout (Dropout)            (None, 32)                0         
+dropout (Dropout)            (None, 32)                0
 _________________________________________________________________
-dense_2 (Dense)              (None, 10)                330       
+dense_2 (Dense)              (None, 10)                330
 =================================================================
 Total params: 142,250
 Trainable params: 142,250
@@ -811,6 +847,7 @@ Non-trainable params: 0
 _________________________________________________________________
 
 ```
+
 Learning rate scheduler: step decay
 Learning rate: 0.0001
 
@@ -822,25 +859,26 @@ Learning rate: 0.0001
 | Validation accuracy | 0.4999 |
 | Number of epochs    | 100    |
 
-![Experiment2](img/lstmexp2.PNG)
+![Experiment2](img/lstmexp2.png)
 
-#### Experiment 3 (final version)
+#### 1.2.4.3. Experiment 3 (final version)
+
 ```text
 Model: "sequential"
 _________________________________________________________________
-Layer (type)                 Output Shape              Param #   
+Layer (type)                 Output Shape              Param #
 =================================================================
-lstm (LSTM)                  (None, 256)               394240    
+lstm (LSTM)                  (None, 256)               394240
 _________________________________________________________________
-dense (Dense)                (None, 128)               32896     
+dense (Dense)                (None, 128)               32896
 _________________________________________________________________
-dense_1 (Dense)              (None, 64)                8256      
+dense_1 (Dense)              (None, 64)                8256
 _________________________________________________________________
-dense_2 (Dense)              (None, 32)                2080      
+dense_2 (Dense)              (None, 32)                2080
 _________________________________________________________________
-dropout (Dropout)            (None, 32)                0         
+dropout (Dropout)            (None, 32)                0
 _________________________________________________________________
-dense_3 (Dense)              (None, 10)                330       
+dense_3 (Dense)              (None, 10)                330
 =================================================================
 Total params: 437,802
 Trainable params: 437,802
@@ -859,7 +897,7 @@ _________________________________________________________________
 | Validation accuracy | 0.5200 |
 | Number of epochs    | 100    |
 
-![Experiment3](img/lstmexp3.PNG)
+![Experiment3](img/lstmexp3.png)
 
 ```text
  precision    recall  f1-score   support
@@ -880,20 +918,19 @@ _________________________________________________________________
 weighted avg       0.57      0.52      0.51    360000
 ```
 
-![PNG](img/lstmexp3snr1.PNG)
-![PNG](img/lstmexp3snr2.PNG)
-![PNG](img/lstmexp3snr3.PNG)
-![PNG](img/lstmexp3snr4.PNG)
-![PNG](img/lstmexp3snr5.PNG)
-![PNG](img/lstmexp3snr6.PNG)
-![PNG](img/lstmexp3snr7.PNG)
-![PNG](img/lstmexp3snr8.PNG)
-![PNG](img/lstmexp3snr9.PNG)
-![PNG](img/lstmexp3snr10.PNG)
-![PNG](img/lstmexp3snr11.PNG)
+![PNG](img/lstmexp3snr1.png)
+![PNG](img/lstmexp3snr2.png)
+![PNG](img/lstmexp3snr3.png)
+![PNG](img/lstmexp3snr4.png)
+![PNG](img/lstmexp3snr5.png)
+![PNG](img/lstmexp3snr6.png)
+![PNG](img/lstmexp3snr7.png)
+![PNG](img/lstmexp3snr8.png)
+![PNG](img/lstmexp3snr9.png)
+![PNG](img/lstmexp3snr10.png)
+![PNG](img/lstmexp3snr11.png)
 
-
-#### With First Derivative
+#### 1.2.4.4. With First Derivative
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -908,7 +945,7 @@ weighted avg       0.57      0.52      0.51    360000
 | Test accuracy       | 0.31   |
 | Number of epochs    | 100    |
 
-![Derivative](img/lstmdiff.PNG) 
+![Derivative](img/lstmdiff.png)
 
 ```text
           precision    recall  f1-score   support
@@ -929,25 +966,23 @@ weighted avg       0.57      0.52      0.51    360000
 weighted avg       0.28      0.31      0.27    360000
 ```
 
+![PNG](img/lstmdiff1.png)
+![PNG](img/lstmdiff2.png)
+![PNG](img/lstmdiff3.png)
+![PNG](img/lstmdiff4.png)
+![PNG](img/lstmdiff5.png)
+![PNG](img/lstmdiff6.png)
+![PNG](img/lstmdiff7.png)
+![PNG](img/lstmdiff8.png)
+![PNG](img/lstmdiff9.png)
+![PNG](img/lstmdiff10.png)
+![PNG](img/lstmdiff11.png)
 
-![PNG](img/lstmdiff1.PNG)
-![PNG](img/lstmdiff2.PNG)
-![PNG](img/lstmdiff3.PNG)
-![PNG](img/lstmdiff4.PNG)
-![PNG](img/lstmdiff5.PNG)
-![PNG](img/lstmdiff6.PNG)
-![PNG](img/lstmdiff7.PNG)
-![PNG](img/lstmdiff8.PNG)
-![PNG](img/lstmdiff9.PNG)
-![PNG](img/lstmdiff10.PNG)
-![PNG](img/lstmdiff11.PNG)
-
-#### With Integral
+#### 1.2.4.5. With Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
 - second experiment was used
-
 
 | Parameter           | Value  |
 | ------------------- | ------ |
@@ -958,7 +993,7 @@ weighted avg       0.28      0.31      0.27    360000
 | Test accuracy       | 0.53   |
 | Number of epochs    | 100    |
 
-![Integral](img/lstmint.PNG)
+![Integral](img/lstmint.png)
 
 ```text
 precision    recall  f1-score   support
@@ -979,19 +1014,19 @@ precision    recall  f1-score   support
 weighted avg       0.57      0.53      0.52    360000
 ```
 
-![PNG](img/lstmdintsnr1.PNG)
-![PNG](img/lstmintsnr2.PNG)
-![PNG](img/lstmintsnr3.PNG)
-![PNG](img/lstmintsnr4.PNG)
-![PNG](img/lstmintsnr5.PNG)
-![PNG](img/lstmintsnr6.PNG)
-![PNG](img/lstmintsnr7.PNG)
-![PNG](img/lstmintsnr8.PNG)
-![PNG](img/lstmintsnr9.PNG)
-![PNG](img/lstmintsnr10.PNG)
-![PNG](img/lstmintsnr11.PNG)
+![PNG](img/lstmdintsnr1.png)
+![PNG](img/lstmintsnr2.png)
+![PNG](img/lstmintsnr3.png)
+![PNG](img/lstmintsnr4.png)
+![PNG](img/lstmintsnr5.png)
+![PNG](img/lstmintsnr6.png)
+![PNG](img/lstmintsnr7.png)
+![PNG](img/lstmintsnr8.png)
+![PNG](img/lstmintsnr9.png)
+![PNG](img/lstmintsnr10.png)
+![PNG](img/lstmintsnr11.png)
 
-#### Combination Raw and Derivative
+#### 1.2.4.6. Combination Raw and Derivative
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -1005,7 +1040,7 @@ weighted avg       0.57      0.53      0.52    360000
 | Test accuracy       | 0.58   |
 | Number of epochs    | 100    |
 
-![Raw Derivative](img/lstmrd.PNG)
+![Raw Derivative](img/lstmrd.png)
 
 ```text
            precision    recall  f1-score   support
@@ -1026,19 +1061,19 @@ weighted avg       0.57      0.53      0.52    360000
 weighted avg       0.57      0.52      0.57    360000
 ```
 
-![PNG](img/lstmrdsnr1.PNG)
-![PNG](img/lstmrdsnr2.PNG)
-![PNG](img/lstmrdsnr3.PNG)
-![PNG](img/lstmrdsnr4.PNG)
-![PNG](img/lstmrdsnr5.PNG)
-![PNG](img/lstmrdsnr6.PNG)
-![PNG](img/lstmrdsnr7.PNG)
-![PNG](img/lstmrdsnr8.PNG)
-![PNG](img/lstmrdsnr9.PNG)
-![PNG](img/lstmrdsnr10.PNG)
-![PNG](img/lstmrdsnr11.PNG)
+![PNG](img/lstmrdsnr1.png)
+![PNG](img/lstmrdsnr2.png)
+![PNG](img/lstmrdsnr3.png)
+![PNG](img/lstmrdsnr4.png)
+![PNG](img/lstmrdsnr5.png)
+![PNG](img/lstmrdsnr6.png)
+![PNG](img/lstmrdsnr7.png)
+![PNG](img/lstmrdsnr8.png)
+![PNG](img/lstmrdsnr9.png)
+![PNG](img/lstmrdsnr10.png)
+![PNG](img/lstmrdsnr11.png)
 
-#### Combination Raw and Integral
+#### 1.2.4.7. Combination Raw and Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -1052,7 +1087,7 @@ weighted avg       0.57      0.52      0.57    360000
 | Test accuracy       | 0.52   |
 | Number of epochs    | 100    |
 
-![Raw Integral](img/rnn-rawint-acc.PNG)
+![Raw Integral](img/rnn-rawint-acc.png)
 
 ```text
           precision    recall  f1-score   support
@@ -1073,19 +1108,19 @@ weighted avg       0.57      0.52      0.57    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
 
-![PNG](img/lstmrisnr1.PNG)
-![PNG](img/lstmrisnr2.PNG)
-![PNG](img/lstmrisnr3.PNG)
-![PNG](img/lstmrisnr4.PNG)
-![PNG](img/lstmrisnr5.PNG)
-![PNG](img/lstmrisnr6.PNG)
-![PNG](img/lstmrisnr7.PNG)
-![PNG](img/lstmrisnr8.PNG)
-![PNG](img/lstmrisnr9.PNG)
-![PNG](img/lstmrisnr10.PNG)
-![PNG](img/lstmrisnr11.PNG)
+![PNG](img/lstmrisnr1.png)
+![PNG](img/lstmrisnr2.png)
+![PNG](img/lstmrisnr3.png)
+![PNG](img/lstmrisnr4.png)
+![PNG](img/lstmrisnr5.png)
+![PNG](img/lstmrisnr6.png)
+![PNG](img/lstmrisnr7.png)
+![PNG](img/lstmrisnr8.png)
+![PNG](img/lstmrisnr9.png)
+![PNG](img/lstmrisnr10.png)
+![PNG](img/lstmrisnr11.png)
 
-#### Combination Derivative and Integral
+#### 1.2.4.8. Combination Derivative and Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -1099,7 +1134,7 @@ weighted avg       0.57      0.52      0.51    360000
 | Test accuracy       | 0.52   |
 | Number of epochs    | 100    |
 
-![Derivative Integral](img/lstmdi.PNG)
+![Derivative Integral](img/lstmdi.png)
 
 ```text
           precision    recall  f1-score   support
@@ -1120,17 +1155,302 @@ weighted avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
 
-![PNG](img/lstmdisnr1.PNG)
-![PNG](img/lstmdisnr2.PNG)
-![PNG](img/lstmdisnr3.PNG)
-![PNG](img/lstmdisnr4.PNG)
-![PNG](img/lstmdisnr5.PNG)
-![PNG](img/lstmdisnr6.PNG)
-![PNG](img/lstmdisnr7.PNG)
-![PNG](img/lstmdisnr8.PNG)
-![PNG](img/lstmdisnr9.PNG)
-![PNG](img/lstmdisnr10.PNG)
-![PNG](img/lstmdisnr11.PNG)
+![PNG](img/lstmdisnr1.png)
+![PNG](img/lstmdisnr2.png)
+![PNG](img/lstmdisnr3.png)
+![PNG](img/lstmdisnr4.png)
+![PNG](img/lstmdisnr5.png)
+![PNG](img/lstmdisnr6.png)
+![PNG](img/lstmdisnr7.png)
+![PNG](img/lstmdisnr8.png)
+![PNG](img/lstmdisnr9.png)
+![PNG](img/lstmdisnr10.png)
+![PNG](img/lstmdisnr11.png)
+
+### 1.2.5. Transformer Encoder Model
+
+Model
+
+```text
+    Model: "model"
+    __________________________________________________________________________________________________
+     Layer (type)                   Output Shape         Param #     Connected to
+    ==================================================================================================
+     input_1 (InputLayer)           [(None, 4, 128)]     0           []
+
+     transformer_encoder (Transform  (None, 4, 128)      83136       ['input_1[0][0]',
+     erEncoder)                                                       'layer_normalization[0][0]',
+                                                                      'layer_normalization_1[0][0]',
+                                                                      'layer_normalization_2[0][0]']
+
+     layer_normalization (LayerNorm  (None, 4, 128)      256         ['transformer_encoder[0][0]']
+     alization)
+
+     layer_normalization_1 (LayerNo  (None, 4, 128)      256         ['transformer_encoder[1][0]']
+     rmalization)
+
+     layer_normalization_2 (LayerNo  (None, 4, 128)      256         ['transformer_encoder[2][0]']
+     rmalization)
+
+     layer_normalization_3 (LayerNo  (None, 4, 128)      256         ['transformer_encoder[3][0]']
+     rmalization)
+
+     flatten (Flatten)              (None, 512)          0           ['layer_normalization_3[0][0]']
+
+     dense (Dense)                  (None, 10)           5130        ['flatten[0][0]']
+
+    ==================================================================================================
+    Total params: 89,290
+    Trainable params: 89,290
+    Non-trainable params: 0
+    __________________________________________________________________________________________________
+```
+
+#### 1.2.5.1. Hyperparameters
+
+- Learning rate scheduler: step decay
+- Start learning rate: 0.0009
+
+#### 1.2.5.2. Combination Raw and Derivative
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.1417 |
+| Training accuracy   | 0.5133 |
+| Validation loss     | 1.1846 |
+| Validation accuracy | 0.4961 |
+| Epochs              | 25     |
+
+![png](modulation_classification_transformer/output_22_2.png)
+
+![png](modulation_classification_transformer/output_22_3.png)
+
+```text
+                  precision    recall  f1-score   support
+
+            8PSK       0.31      0.32      0.32     36000
+          AM-DSB       0.42      0.77      0.54     36000
+            BPSK       0.41      0.70      0.52     36000
+           CPFSK       0.75      0.60      0.67     36000
+            GFSK       0.70      0.68      0.69     36000
+            PAM4       0.86      0.61      0.71     36000
+           QAM16       0.36      0.18      0.24     36000
+           QAM64       0.52      0.45      0.49     36000
+            QPSK       0.33      0.36      0.34     36000
+            WBFM       0.58      0.28      0.37     36000
+
+        accuracy                           0.49    360000
+       macro avg       0.52      0.49      0.49    360000
+    weighted avg       0.52      0.49      0.49    360000
+
+```
+
+- Most confused classes: 8PSK and WBFM
+- Accuracy at SNR = 0 : 69%
+
+![png](modulation_classification_transformer/output_23_1.png)
+
+![png](modulation_classification_transformer/output_23_2.png)
+
+Accuracy at SNR = -10 is 0.2199999988079071 %
+
+![png](modulation_classification_transformer/output_23_4.png)
+
+Accuracy at SNR = -12 is 0.1599999964237213 %
+
+![png](modulation_classification_transformer/output_23_6.png)
+
+Accuracy at SNR = -14 is 0.11999999731779099 %
+
+![png](modulation_classification_transformer/output_23_8.png)
+
+Accuracy at SNR = -16 is 0.10999999940395355 %
+
+![png](modulation_classification_transformer/output_23_10.png)
+
+Accuracy at SNR = -18 is 0.10999999940395355 %
+
+![png](modulation_classification_transformer/output_23_12.png)
+
+Accuracy at SNR = -2 is 0.6399999856948853 %
+
+![png](modulation_classification_transformer/output_23_14.png)
+
+Accuracy at SNR = -20 is 0.10000000149011612 %
+
+![png](modulation_classification_transformer/output_23_16.png)
+
+Accuracy at SNR = -4 is 0.5299999713897705 %
+
+![png](modulation_classification_transformer/output_23_18.png)
+
+Accuracy at SNR = -6 is 0.4099999964237213 %
+
+![png](modulation_classification_transformer/output_23_20.png)
+
+Accuracy at SNR = -8 is 0.3100000023841858 %
+
+![png](modulation_classification_transformer/output_23_22.png)
+
+Accuracy at SNR = 0 is 0.6899999976158142 %
+
+![png](modulation_classification_transformer/output_23_24.png)
+
+Accuracy at SNR = 10 is 0.7200000286102295 %
+
+![png](modulation_classification_transformer/output_23_26.png)
+
+Accuracy at SNR = 12 is 0.7200000286102295 %
+
+![png](modulation_classification_transformer/output_23_28.png)
+
+Accuracy at SNR = 14 is 0.7200000286102295 %
+
+![png](modulation_classification_transformer/output_23_30.png)
+
+Accuracy at SNR = 16 is 0.7200000286102295 %
+
+![png](modulation_classification_transformer/output_23_32.png)
+
+Accuracy at SNR = 18 is 0.7200000286102295 %
+
+![png](modulation_classification_transformer/output_23_34.png)
+
+Accuracy at SNR = 2 is 0.7099999785423279 %
+
+![png](modulation_classification_transformer/output_23_36.png)
+
+Accuracy at SNR = 4 is 0.7200000286102295 %
+
+![png](modulation_classification_transformer/output_23_38.png)
+
+Accuracy at SNR = 6 is 0.7300000190734863 %
+
+![png](modulation_classification_transformer/output_23_40.png)
+
+Accuracy at SNR = 8 is 0.7200000286102295 %
+
+![png](modulation_classification_transformer/output_23_42.png)
+
+#### 1.2.5.3. Embedding (SNR)
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training Loss       | 0.9943 |
+| Validation Loss     | 1.0397 |
+| Training Accuracy   | 0.5706 |
+| Validation Accuracy | 0.5492 |
+| Epochs              | 54     |
+
+![png](modulation_classification_transformer/output_31_2.png)
+
+![png](modulation_classification_transformer/output_31_3.png)
+
+```text
+                  precision    recall  f1-score   support
+
+            8PSK       0.36      0.36      0.36     36000
+          AM-DSB       0.56      0.64      0.59     36000
+            BPSK       0.88      0.62      0.73     36000
+           CPFSK       0.57      0.68      0.62     36000
+            GFSK       0.75      0.69      0.72     36000
+            PAM4       0.58      0.78      0.66     36000
+           QAM16       0.42      0.45      0.43     36000
+           QAM64       0.50      0.68      0.57     36000
+            QPSK       0.47      0.29      0.36     36000
+            WBFM       0.57      0.37      0.45     36000
+
+        accuracy                           0.56    360000
+       macro avg       0.56      0.56      0.55    360000
+    weighted avg       0.56      0.56      0.55    360000
+```
+
+- Most confused classes: 8PSK and QAM16
+- Accuracy at SNR = 0 : 73.56%
+
+![png](modulation_classification_transformer/output_32_1.png)
+
+![png](modulation_classification_transformer/output_32_2.png)
+
+Accuracy at SNR = -10 is 41.85 %
+
+![png](modulation_classification_transformer/output_32_4.png)
+
+Accuracy at SNR = -12 is 30.06 %
+
+![png](modulation_classification_transformer/output_32_6.png)
+
+Accuracy at SNR = -14 is 22.73 %
+
+![png](modulation_classification_transformer/output_32_8.png)
+
+Accuracy at SNR = -16 is 16.61 %
+
+![png](modulation_classification_transformer/output_32_10.png)
+
+Accuracy at SNR = -18 is 12.79 %
+
+![png](modulation_classification_transformer/output_32_12.png)
+
+Accuracy at SNR = -2 is 73.27 %
+
+![png](modulation_classification_transformer/output_32_14.png)
+
+Accuracy at SNR = -20 is 10.92 %
+
+![png](modulation_classification_transformer/output_32_16.png)
+
+Accuracy at SNR = -4 is 70.44 %
+
+![png](modulation_classification_transformer/output_32_18.png)
+
+Accuracy at SNR = -6 is 63.14 %
+
+![png](modulation_classification_transformer/output_32_20.png)
+
+Accuracy at SNR = -8 is 53.69 %
+
+![png](modulation_classification_transformer/output_32_22.png)
+
+Accuracy at SNR = 0 is 73.56 %
+
+![png](modulation_classification_transformer/output_32_24.png)
+
+Accuracy at SNR = 10 is 70.9 %
+
+![png](modulation_classification_transformer/output_32_26.png)
+
+Accuracy at SNR = 12 is 70.78 %
+
+![png](modulation_classification_transformer/output_32_28.png)
+
+Accuracy at SNR = 14 is 70.94 %
+
+![png](modulation_classification_transformer/output_32_30.png)
+
+Accuracy at SNR = 16 is 70.44 %
+
+![png](modulation_classification_transformer/output_32_32.png)
+
+Accuracy at SNR = 18 is 70.32 %
+
+![png](modulation_classification_transformer/output_32_34.png)
+
+Accuracy at SNR = 2 is 72.87 %
+
+![png](modulation_classification_transformer/output_32_36.png)
+
+Accuracy at SNR = 4 is 72.55 %
+
+![png](modulation_classification_transformer/output_32_38.png)
+
+Accuracy at SNR = 6 is 71.69 %
+
+![png](modulation_classification_transformer/output_32_40.png)
+
+Accuracy at SNR = 8 is 70.82 %
+
+![png](modulation_classification_transformer/output_32_42.png)
 
 <!-- References -->
 [github]: github.com/moharamfatema/modulation-classification
