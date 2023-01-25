@@ -29,10 +29,6 @@
       - [Combination Raw and Derivative](#combination-raw-and-derivative)
       - [Combination Raw and Integral](#combination-raw-and-integral)
       - [Combination Derivative and Integral](#combination-derivative-and-integral)
-    - [Transformer Encoder Model](#transformer-encoder-model)
-      - [Hyperparameters](#hyperparameters-1)
-      - [Combination Raw and Derivative](#combination-raw-and-derivative-1)
-      - [Embedding (SNR)](#embedding-snr)
 
 ## The Dataset
 
@@ -760,294 +756,379 @@ Learning rate: 0.0001
 ![RNN Derivative Integral](img/rnn-diffint-acc.png)
 ![RNN Derivative Integral](img/rnn-diffint-SNRacc.png)
 
-### Transformer Encoder Model
 
-Model
+
+### LSTM model
+
+
+#### Experiment 1
 
 ```text
-    Model: "model"
-    __________________________________________________________________________________________________
-     Layer (type)                   Output Shape         Param #     Connected to
-    ==================================================================================================
-     input_1 (InputLayer)           [(None, 4, 128)]     0           []
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_1 (LSTM)                (None, 22)                13288     
+_________________________________________________________________
+dense_3 (Dense)              (None, 10)                230       
+=================================================================
+Total params: 13,518
+Trainable params: 13,518
+Non-trainable params: 0
+_________________________________________________________________
+```
+Learning rate scheduler: step decay
+Learning rate: 0.0009
 
-     transformer_encoder (Transform  (None, 4, 128)      83136       ['input_1[0][0]',
-     erEncoder)                                                       'layer_normalization[0][0]',
-                                                                      'layer_normalization_1[0][0]',
-                                                                      'layer_normalization_2[0][0]']
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.487  |
+| Training accuracy   | 0.389  |
+| Validation loss     | 1.4979 |
+| Validation accuracy | 0.3837 |
+| Number of epochs    | 100    |
 
-     layer_normalization (LayerNorm  (None, 4, 128)      256         ['transformer_encoder[0][0]']
-     alization)
+![Experiment1 ](img/lstmexp1.PNG)
 
-     layer_normalization_1 (LayerNo  (None, 4, 128)      256         ['transformer_encoder[1][0]']
-     rmalization)
+#### Experiment 2
 
-     layer_normalization_2 (LayerNo  (None, 4, 128)      256         ['transformer_encoder[2][0]']
-     rmalization)
+```text
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm (LSTM)                  (None, 128)               131584    
+_________________________________________________________________
+dense (Dense)                (None, 64)                8256      
+_________________________________________________________________
+dense_1 (Dense)              (None, 32)                2080      
+_________________________________________________________________
+dropout (Dropout)            (None, 32)                0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 10)                330       
+=================================================================
+Total params: 142,250
+Trainable params: 142,250
+Non-trainable params: 0
+_________________________________________________________________
 
-     layer_normalization_3 (LayerNo  (None, 4, 128)      256         ['transformer_encoder[3][0]']
-     rmalization)
+```
+Learning rate scheduler: step decay
+Learning rate: 0.0001
 
-     flatten (Flatten)              (None, 512)          0           ['layer_normalization_3[0][0]']
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.1282 |
+| Training accuracy   | 0.5082 |
+| Validation loss     | 1.1718 |
+| Validation accuracy | 0.4999 |
+| Number of epochs    | 100    |
 
-     dense (Dense)                  (None, 10)           5130        ['flatten[0][0]']
+![Experiment2](img/lstmexp2.PNG)
 
-    ==================================================================================================
-    Total params: 89,290
-    Trainable params: 89,290
-    Non-trainable params: 0
-    __________________________________________________________________________________________________
+#### Experiment 3 (final version)
+```text
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm (LSTM)                  (None, 256)               394240    
+_________________________________________________________________
+dense (Dense)                (None, 128)               32896     
+_________________________________________________________________
+dense_1 (Dense)              (None, 64)                8256      
+_________________________________________________________________
+dense_2 (Dense)              (None, 32)                2080      
+_________________________________________________________________
+dropout (Dropout)            (None, 32)                0         
+_________________________________________________________________
+dense_3 (Dense)              (None, 10)                330       
+=================================================================
+Total params: 437,802
+Trainable params: 437,802
+Non-trainable params: 0
+_________________________________________________________________
 ```
 
-#### Hyperparameters
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.0844 |
+| Training accuracy   | 0.5291 |
+| Validation loss     | 1.3189 |
+| Validation accuracy | 0.5200 |
+| Number of epochs    | 100    |
+
+![Experiment3](img/lstmexp3.PNG)
+
+```text
+ precision    recall  f1-score   support
+
+        8PSK       0.32      0.45      0.37     36000
+      AM-DSB       0.47      0.79      0.59     36000
+        BPSK       0.42      0.73      0.53     36000
+       CPFSK       0.69      0.62      0.65     36000
+        GFSK       0.75      0.68      0.72     36000
+        PAM4       0.86      0.64      0.73     36000
+       QAM16       0.42      0.29      0.34     36000
+       QAM64       0.57      0.40      0.47     36000
+        QPSK       0.34      0.31      0.32     36000
+        WBFM       0.83      0.26      0.40     36000
+
+    accuracy                           0.52    360000
+   macro avg       0.57      0.52      0.51    360000
+weighted avg       0.57      0.52      0.51    360000
+```
+
+![PNG](img/lstmexp3snr1.PNG)
+![PNG](img/lstmexp3snr2.PNG)
+![PNG](img/lstmexp3snr3.PNG)
+![PNG](img/lstmexp3snr4.PNG)
+![PNG](img/lstmexp3snr5.PNG)
+![PNG](img/lstmexp3snr6.PNG)
+![PNG](img/lstmexp3snr7.PNG)
+![PNG](img/lstmexp3snr8.PNG)
+![PNG](img/lstmexp3snr9.PNG)
+![PNG](img/lstmexp3snr10.PNG)
+![PNG](img/lstmexp3snr11.PNG)
+
+
+#### With First Derivative
 
 - Learning rate scheduler: step decay
-- Start learning rate: 0.0009
+- Learning rate start: 0.0009
+-first experiment architechture was used
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.7470 |
+| Training accuracy   | 0.3135 |
+| Validation loss     | 1.7604 |
+| Validation accuracy | 0.3085 |
+| Test accuracy       | 0.31   |
+| Number of epochs    | 100    |
+
+![Derivative](img/lstmdiff.PNG) 
+
+```text
+          precision    recall  f1-score   support
+
+        8PSK       0.15      0.07      0.09     36000
+      AM-DSB       0.36      0.50      0.42     36000
+        BPSK       0.15      0.14      0.14     36000
+       CPFSK       0.32      0.59      0.41     36000
+        GFSK       0.38      0.63      0.47     36000
+        PAM4       0.47      0.46      0.46     36000
+       QAM16       0.22      0.04      0.07     36000
+       QAM64       0.26      0.51      0.34     36000
+        QPSK       0.17      0.03      0.05     36000
+        WBFM       0.29      0.13      0.18     36000
+
+    accuracy                           0.31    360000
+   macro avg       0.28      0.31      0.27    360000
+weighted avg       0.28      0.31      0.27    360000
+```
+
+
+![PNG](img/lstmdiff1.PNG)
+![PNG](img/lstmdiff2.PNG)
+![PNG](img/lstmdiff3.PNG)
+![PNG](img/lstmdiff4.PNG)
+![PNG](img/lstmdiff5.PNG)
+![PNG](img/lstmdiff6.PNG)
+![PNG](img/lstmdiff7.PNG)
+![PNG](img/lstmdiff8.PNG)
+![PNG](img/lstmdiff9.PNG)
+![PNG](img/lstmdiff10.PNG)
+![PNG](img/lstmdiff11.PNG)
+
+#### With Integral
+
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
+- second experiment was used
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.0711 |
+| Training accuracy   | 0.5427 |
+| Validation loss     | 1.1411 |
+| Validation accuracy | 0.5288 |
+| Test accuracy       | 0.53   |
+| Number of epochs    | 100    |
+
+![Integral](img/lstmint.PNG)
+
+```text
+precision    recall  f1-score   support
+
+        8PSK       0.26      0.52      0.35     36000
+      AM-DSB       0.47      0.80      0.59     36000
+        BPSK       0.57      0.65      0.60     36000
+       CPFSK       0.66      0.62      0.64     36000
+        GFSK       0.69      0.70      0.70     36000
+        PAM4       0.85      0.67      0.75     36000
+       QAM16       0.34      0.13      0.19     36000
+       QAM64       0.53      0.57      0.55     36000
+        QPSK       0.51      0.37      0.43     36000
+        WBFM       0.85      0.25      0.39     36000
+
+    accuracy                           0.53    360000
+   macro avg       0.57      0.53      0.52    360000
+weighted avg       0.57      0.53      0.52    360000
+```
+
+![PNG](img/lstmdintsnr1.PNG)
+![PNG](img/lstmintsnr2.PNG)
+![PNG](img/lstmintsnr3.PNG)
+![PNG](img/lstmintsnr4.PNG)
+![PNG](img/lstmintsnr5.PNG)
+![PNG](img/lstmintsnr6.PNG)
+![PNG](img/lstmintsnr7.PNG)
+![PNG](img/lstmintsnr8.PNG)
+![PNG](img/lstmintsnr9.PNG)
+![PNG](img/lstmintsnr10.PNG)
+![PNG](img/lstmintsnr11.PNG)
 
 #### Combination Raw and Derivative
 
-    Epoch 25/100
-    1559/1559 [==============================] - 28s 18ms/step - loss: 1.1417 - accuracy: 0.5133 - val_loss: 1.1846 - val_accuracy: 0.4961 - lr: 7.0000e-04
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
 
 | Parameter           | Value  |
 | ------------------- | ------ |
-| Training loss       | 1.1417 |
-| Training accuracy   | 0.5133 |
-| Validation loss     | 1.1846 |
-| Validation accuracy | 0.4961 |
-| Epochs              | 25     |
+| Training loss       | 0.9455 |
+| Training accuracy   | 0.5914 |
+| Validation loss     | 1.5697 |
+| Validation accuracy | 0.5253 |
+| Test accuracy       | 0.58   |
+| Number of epochs    | 100    |
 
-![png](modulation_classification_transformer/output_22_2.png)
-
-![png](modulation_classification_transformer/output_22_3.png)
-
-```
-
-                  precision    recall  f1-score   support
-
-            8PSK       0.31      0.32      0.32     36000
-          AM-DSB       0.42      0.77      0.54     36000
-            BPSK       0.41      0.70      0.52     36000
-           CPFSK       0.75      0.60      0.67     36000
-            GFSK       0.70      0.68      0.69     36000
-            PAM4       0.86      0.61      0.71     36000
-           QAM16       0.36      0.18      0.24     36000
-           QAM64       0.52      0.45      0.49     36000
-            QPSK       0.33      0.36      0.34     36000
-            WBFM       0.58      0.28      0.37     36000
-
-        accuracy                           0.49    360000
-       macro avg       0.52      0.49      0.49    360000
-    weighted avg       0.52      0.49      0.49    360000
-
-```
-
-- Most confused classes: 8PSK and WBFM
-- Accuracy at SNR = 0 : 69%
-
-![png](modulation_classification_transformer/output_23_1.png)
-
-![png](modulation_classification_transformer/output_23_2.png)
-
-    Accuracy at SNR = -10 is 0.2199999988079071 %
-
-![png](modulation_classification_transformer/output_23_4.png)
-
-    Accuracy at SNR = -12 is 0.1599999964237213 %
-
-![png](modulation_classification_transformer/output_23_6.png)
-
-    Accuracy at SNR = -14 is 0.11999999731779099 %
-
-![png](modulation_classification_transformer/output_23_8.png)
-
-    Accuracy at SNR = -16 is 0.10999999940395355 %
-
-![png](modulation_classification_transformer/output_23_10.png)
-
-    Accuracy at SNR = -18 is 0.10999999940395355 %
-
-![png](modulation_classification_transformer/output_23_12.png)
-
-    Accuracy at SNR = -2 is 0.6399999856948853 %
-
-![png](modulation_classification_transformer/output_23_14.png)
-
-    Accuracy at SNR = -20 is 0.10000000149011612 %
-
-![png](modulation_classification_transformer/output_23_16.png)
-
-    Accuracy at SNR = -4 is 0.5299999713897705 %
-
-![png](modulation_classification_transformer/output_23_18.png)
-
-    Accuracy at SNR = -6 is 0.4099999964237213 %
-
-![png](modulation_classification_transformer/output_23_20.png)
-
-    Accuracy at SNR = -8 is 0.3100000023841858 %
-
-![png](modulation_classification_transformer/output_23_22.png)
-
-    Accuracy at SNR = 0 is 0.6899999976158142 %
-
-![png](modulation_classification_transformer/output_23_24.png)
-
-    Accuracy at SNR = 10 is 0.7200000286102295 %
-
-![png](modulation_classification_transformer/output_23_26.png)
-
-    Accuracy at SNR = 12 is 0.7200000286102295 %
-
-![png](modulation_classification_transformer/output_23_28.png)
-
-    Accuracy at SNR = 14 is 0.7200000286102295 %
-
-![png](modulation_classification_transformer/output_23_30.png)
-
-    Accuracy at SNR = 16 is 0.7200000286102295 %
-
-![png](modulation_classification_transformer/output_23_32.png)
-
-    Accuracy at SNR = 18 is 0.7200000286102295 %
-
-![png](modulation_classification_transformer/output_23_34.png)
-
-    Accuracy at SNR = 2 is 0.7099999785423279 %
-
-![png](modulation_classification_transformer/output_23_36.png)
-
-    Accuracy at SNR = 4 is 0.7200000286102295 %
-
-![png](modulation_classification_transformer/output_23_38.png)
-
-    Accuracy at SNR = 6 is 0.7300000190734863 %
-
-![png](modulation_classification_transformer/output_23_40.png)
-
-    Accuracy at SNR = 8 is 0.7200000286102295 %
-
-![png](modulation_classification_transformer/output_23_42.png)
-
-#### Embedding (SNR)
-
-| Parameter           | Value  |
-| ------------------- | ------ |
-| Training Loss       | 0.9943 |
-| Validation Loss     | 1.0397 |
-| Training Accuracy   | 0.5706 |
-| Validation Accuracy | 0.5492 |
-| Epochs              | 54     |
-
-![png](modulation_classification_transformer/output_31_2.png)
-
-![png](modulation_classification_transformer/output_31_3.png)
+![Raw Derivative](img/lstmrd.PNG)
 
 ```text
-                  precision    recall  f1-score   support
+           precision    recall  f1-score   support
 
-            8PSK       0.36      0.36      0.36     36000
-          AM-DSB       0.56      0.64      0.59     36000
-            BPSK       0.88      0.62      0.73     36000
-           CPFSK       0.57      0.68      0.62     36000
-            GFSK       0.75      0.69      0.72     36000
-            PAM4       0.58      0.78      0.66     36000
-           QAM16       0.42      0.45      0.43     36000
-           QAM64       0.50      0.68      0.57     36000
-            QPSK       0.47      0.29      0.36     36000
-            WBFM       0.57      0.37      0.45     36000
+        8PSK       0.29      0.45      0.35     36000
+      AM-DSB       0.46      0.80      0.58     36000
+        BPSK       0.51      0.64      0.57     36000
+       CPFSK       0.63      0.62      0.63     36000
+        GFSK       0.75      0.67      0.71     36000
+        PAM4       0.83      0.67      0.74     36000
+       QAM16       0.39      0.26      0.31     36000
+       QAM64       0.54      0.44      0.48     36000
+        QPSK       0.43      0.42      0.43     36000
+        WBFM       0.83      0.26      0.40     36000
 
-        accuracy                           0.56    360000
-       macro avg       0.56      0.56      0.55    360000
-    weighted avg       0.56      0.56      0.55    360000
+    accuracy                           0.58    360000
+   macro avg       0.57      0.52      0.58    360000
+weighted avg       0.57      0.52      0.57    360000
 ```
 
-- Most confused classes: 8PSK and QAM16
-- Accuracy at SNR = 0 : 73.56%
+![PNG](img/lstmrdsnr1.PNG)
+![PNG](img/lstmrdsnr2.PNG)
+![PNG](img/lstmrdsnr3.PNG)
+![PNG](img/lstmrdsnr4.PNG)
+![PNG](img/lstmrdsnr5.PNG)
+![PNG](img/lstmrdsnr6.PNG)
+![PNG](img/lstmrdsnr7.PNG)
+![PNG](img/lstmrdsnr8.PNG)
+![PNG](img/lstmrdsnr9.PNG)
+![PNG](img/lstmrdsnr10.PNG)
+![PNG](img/lstmrdsnr11.PNG)
 
-![png](modulation_classification_transformer/output_32_1.png)
+#### Combination Raw and Integral
 
-![png](modulation_classification_transformer/output_32_2.png)
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
 
-    Accuracy at SNR = -10 is 41.85 %
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 0.8854 |
+| Training accuracy   | 0.6175 |
+| Validation loss     | 2.4617 |
+| Validation accuracy | 0.5198 |
+| Test accuracy       | 0.52   |
+| Number of epochs    | 100    |
 
-![png](modulation_classification_transformer/output_32_4.png)
+![Raw Integral](img/rnn-rawint-acc.PNG)
 
-    Accuracy at SNR = -12 is 30.06 %
+```text
+          precision    recall  f1-score   support
 
-![png](modulation_classification_transformer/output_32_6.png)
+        8PSK       0.26      0.51      0.35     36000
+      AM-DSB       0.46      0.80      0.58     36000
+        BPSK       0.59      0.62      0.60     36000
+       CPFSK       0.70      0.58      0.63     36000
+        GFSK       0.67      0.69      0.68     36000
+        PAM4       0.81      0.66      0.73     36000
+       QAM16       0.39      0.26      0.31     36000
+       QAM64       0.48      0.41      0.44     36000
+        QPSK       0.50      0.37      0.42     36000
+        WBFM       0.80      0.26      0.39     36000
 
-    Accuracy at SNR = -14 is 22.73 %
+    accuracy                           0.52    360000
+   macro avg       0.57      0.52      0.51    360000
+weighted avg       0.57      0.52      0.51    360000
+```
 
-![png](modulation_classification_transformer/output_32_8.png)
+![PNG](img/lstmrisnr1.PNG)
+![PNG](img/lstmrisnr2.PNG)
+![PNG](img/lstmrisnr3.PNG)
+![PNG](img/lstmrisnr4.PNG)
+![PNG](img/lstmrisnr5.PNG)
+![PNG](img/lstmrisnr6.PNG)
+![PNG](img/lstmrisnr7.PNG)
+![PNG](img/lstmrisnr8.PNG)
+![PNG](img/lstmrisnr9.PNG)
+![PNG](img/lstmrisnr10.PNG)
+![PNG](img/lstmrisnr11.PNG)
 
-    Accuracy at SNR = -16 is 16.61 %
+#### Combination Derivative and Integral
 
-![png](modulation_classification_transformer/output_32_10.png)
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
 
-    Accuracy at SNR = -18 is 12.79 %
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 0.9326 |
+| Training accuracy   | 0.6006 |
+| Validation loss     | 1.8830 |
+| Validation accuracy | 0.5185 |
+| Test accuracy       | 0.52   |
+| Number of epochs    | 100    |
 
-![png](modulation_classification_transformer/output_32_12.png)
+![Derivative Integral](img/lstmdi.PNG)
 
-    Accuracy at SNR = -2 is 73.27 %
+```text
+          precision    recall  f1-score   support
 
-![png](modulation_classification_transformer/output_32_14.png)
+        8PSK       0.26      0.51      0.35     36000
+      AM-DSB       0.46      0.80      0.58     36000
+        BPSK       0.59d      0.62      0.60     36000
+       CPFSK       0.70      0.58      0.63     36000
+        GFSK       0.67      0.69      0.68     36000
+        PAM4       0.81      0.66      0.73     36000
+       QAM16       0.39      0.26      0.31     36000
+       QAM64       0.48      0.41      0.44     36000
+        QPSK       0.50      0.37      0.42     36000
+        WBFM       0.80      0.26      0.39     36000
 
-    Accuracy at SNR = -20 is 10.92 %
+    accuracy                           0.52    360000
+   macro avg       0.57      0.52      0.51    360000
+weighted avg       0.57      0.52      0.51    360000
+```
 
-![png](modulation_classification_transformer/output_32_16.png)
-
-    Accuracy at SNR = -4 is 70.44 %
-
-![png](modulation_classification_transformer/output_32_18.png)
-
-    Accuracy at SNR = -6 is 63.14 %
-
-![png](modulation_classification_transformer/output_32_20.png)
-
-    Accuracy at SNR = -8 is 53.69 %
-
-![png](modulation_classification_transformer/output_32_22.png)
-
-    Accuracy at SNR = 0 is 73.56 %
-
-![png](modulation_classification_transformer/output_32_24.png)
-
-    Accuracy at SNR = 10 is 70.9 %
-
-![png](modulation_classification_transformer/output_32_26.png)
-
-    Accuracy at SNR = 12 is 70.78 %
-
-![png](modulation_classification_transformer/output_32_28.png)
-
-    Accuracy at SNR = 14 is 70.94 %
-
-![png](modulation_classification_transformer/output_32_30.png)
-
-    Accuracy at SNR = 16 is 70.44 %
-
-![png](modulation_classification_transformer/output_32_32.png)
-
-    Accuracy at SNR = 18 is 70.32 %
-
-![png](modulation_classification_transformer/output_32_34.png)
-
-    Accuracy at SNR = 2 is 72.87 %
-
-![png](modulation_classification_transformer/output_32_36.png)
-
-    Accuracy at SNR = 4 is 72.55 %
-
-![png](modulation_classification_transformer/output_32_38.png)
-
-    Accuracy at SNR = 6 is 71.69 %
-
-![png](modulation_classification_transformer/output_32_40.png)
-
-    Accuracy at SNR = 8 is 70.82 %
-
-![png](modulation_classification_transformer/output_32_42.png)
+![PNG](img/lstmdisnr1.PNG)
+![PNG](img/lstmdisnr2.PNG)
+![PNG](img/lstmdisnr3.PNG)
+![PNG](img/lstmdisnr4.PNG)
+![PNG](img/lstmdisnr5.PNG)
+![PNG](img/lstmdisnr6.PNG)
+![PNG](img/lstmdisnr7.PNG)
+![PNG](img/lstmdisnr8.PNG)
+![PNG](img/lstmdisnr9.PNG)
+![PNG](img/lstmdisnr10.PNG)
+![PNG](img/lstmdisnr11.PNG)
 
 <!-- References -->
 [github]: github.com/moharamfatema/modulation-classification
