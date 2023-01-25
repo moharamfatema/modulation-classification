@@ -229,6 +229,73 @@ Learning rate: 0.0001
 ![RNN Derivative](img/rnn-der-acc.png)
 ![RNN Derivative](img/rnn-der-SNRRacc.png)
 
+#### With Integral
+
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.1069 |
+| Training accuracy   | 0.5341 |
+| Validation loss     | 1.1392 |
+| Validation accuracy | 0.5242 |
+| Test accuracy       | 0.5242 |
+| Number of epochs    | 80     |
+
+![RNN Integral](img/rnn-int-acc.png)
+![RNN Integral](img/rnn-int-SNRacc.png)
+
+#### Combination Raw and Derivative
+
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.0770 |
+| Training accuracy   | 0.5427 |
+| Validation loss     | 1.1412 |
+| Validation accuracy | 0.5255 |
+| Test accuracy       | 0.5237 |
+| Number of epochs    | 57     |
+
+![RNN Raw Derivative](img/rnn-rawdiff-acc.png)
+![RNN Raw Derivative](img/rnn-rawdiff-SNRacc.png)
+
+#### Combination Raw and Integral
+
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.1493 |
+| Training accuracy   | 0.5151 |
+| Validation loss     | 1.1694 |
+| Validation accuracy | 0.5106 |
+| Test accuracy       | 0.5103 |
+| Number of epochs    | 34     |
+
+![RNN Raw Integral](img/rnn-rawint-acc.png)
+![RNN Raw Integral](img/rnn-rawint-SNRacc.png)
+
+#### Combination Derivative and Integral
+
+- Learning rate scheduler: step decay
+- Learning rate start: 0.0009
+
+| Parameter           | Value  |
+| ------------------- | ------ |
+| Training loss       | 1.1084 |
+| Training accuracy   | 0.5318 |
+| Validation loss     | 1.1370 |
+| Validation accuracy | 0.5273 |
+| Test accuracy       | 0.5281 |
+| Number of epochs    | 65     |
+
+![RNN Derivative Integral](img/rnn-diffint-acc.png)
+![RNN Derivative Integral](img/rnn-diffint-SNRacc.png)
 
 
 
