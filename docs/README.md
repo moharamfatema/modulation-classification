@@ -704,10 +704,45 @@ Learning rate: 0.0001
 | Training accuracy   | 0.5445 |
 | Validation loss     | 1.1397 |
 | Validation accuracy | 0.5245 |
+| Test accuracy       | 0.5238 |
 | Number of epochs    | 63     |
 
 ![Experiment5 RNN](img/exp5-rnn-acc.png)
 ![Experiment5 RNN](img/exp5-rnn-SNRRacc.png)
+
+```text
+              precision    recall  f1-score   support
+
+        8PSK       0.42      0.38      0.40     36000
+      AM-DSB       0.51      0.71      0.60     36000
+        BPSK       0.48      0.67      0.56     36000
+       CPFSK       0.67      0.62      0.64     36000
+        GFSK       0.64      0.71      0.67     36000
+        PAM4       0.74      0.68      0.71     36000
+       QAM16       0.41      0.30      0.34     36000
+       QAM64       0.53      0.41      0.46     36000
+        QPSK       0.34      0.41      0.37     36000
+        WBFM       0.49      0.33      0.39     36000
+
+    accuracy                           0.52    360000
+   macro avg       0.52      0.52      0.51    360000
+weighted avg       0.52      0.52      0.51    360000
+```
+
+- Most confused class: AM-DSB, WBFM
+- Accuracy at SNR = 0 is 0.71
+
+![png](img/1snr1.png)
+![png](img/2snr1.png)
+![png](img/3snr1.png)
+![png](img/4snr1.png)
+![png](img/5snr1.png)
+![png](img/6snr1.png)
+![png](img/7snr1.png)
+![png](img/8snr1.png)
+![png](img/9snr1.png)
+![png](img/10snr1.png)
+![png](img/11snr1.png)
 
 #### 1.2.3.6. With First Derivative
 
@@ -726,6 +761,40 @@ Learning rate: 0.0001
 ![RNN Derivative](img/rnn-der-acc.png)
 ![RNN Derivative](img/rnn-der-SNRRacc.png)
 
+```text
+              precision    recall  f1-score   support
+
+        8PSK       0.20      0.14      0.16     36000
+      AM-DSB       0.36      0.69      0.47     36000
+        BPSK       0.45      0.35      0.40     36000
+       CPFSK       0.50      0.62      0.56     36000
+        GFSK       0.57      0.64      0.60     36000
+        PAM4       0.57      0.52      0.54     36000
+       QAM16       0.25      0.06      0.10     36000
+       QAM64       0.36      0.46      0.40     36000
+        QPSK       0.21      0.25      0.23     36000
+        WBFM       0.41      0.28      0.33     36000
+
+    accuracy                           0.40    360000
+   macro avg       0.39      0.40      0.38    360000
+weighted avg       0.39      0.40      0.38    360000
+```
+
+- Most confused class: AM-DSB, WBFM and QAM16, QAM64
+- Accuracy at SNR = 0 is 0.55
+
+![png](img/1snr2.png)
+![png](img/2snr2.png)
+![png](img/3snr2.png)
+![png](img/4snr2.png)
+![png](img/5snr2.png)
+![png](img/6snr2.png)
+![png](img/7snr2.png)
+![png](img/8snr2.png)
+![png](img/9snr2.png)
+![png](img/10snr2.png)
+![png](img/11snr2.png)
+
 #### 1.2.3.7. With Integral
 
 - Learning rate scheduler: step decay
@@ -742,6 +811,40 @@ Learning rate: 0.0001
 
 ![RNN Integral](img/rnn-int-acc.png)
 ![RNN Integral](img/rnn-int-SNRacc.png)
+
+```text
+              precision    recall  f1-score   support
+
+        8PSK       0.37      0.41      0.39     36000
+      AM-DSB       0.49      0.77      0.60     36000
+        BPSK       0.54      0.64      0.59     36000
+       CPFSK       0.66      0.62      0.64     36000
+        GFSK       0.67      0.70      0.68     36000
+        PAM4       0.76      0.68      0.72     36000
+       QAM16       0.42      0.14      0.21     36000
+       QAM64       0.51      0.51      0.51     36000
+        QPSK       0.32      0.47      0.38     36000
+        WBFM       0.63      0.27      0.38     36000
+
+    accuracy                           0.52    360000
+   macro avg       0.54      0.52      0.51    360000
+weighted avg       0.54      0.52      0.51    360000
+```
+
+- Most confused class: QPSK
+- Accuracy at SNR = 0 is 0.70
+
+![png](img/1snr3.png)
+![png](img/2snr3.png)
+![png](img/3snr3.png)
+![png](img/4snr3.png)
+![png](img/5snr3.png)
+![png](img/6snr3.png)
+![png](img/7snr3.png)
+![png](img/8snr3.png)
+![png](img/9snr3.png)
+![png](img/10snr3.png)
+![png](img/11snr3.png)
 
 #### 1.2.3.8. Combination Raw and Derivative
 
@@ -760,6 +863,40 @@ Learning rate: 0.0001
 ![RNN Raw Derivative](img/rnn-rawdiff-acc.png)
 ![RNN Raw Derivative](img/rnn-rawdiff-SNRacc.png)
 
+```text
+              precision    recall  f1-score   support
+
+        8PSK       0.29      0.48      0.36     36000
+      AM-DSB       0.47      0.72      0.57     36000
+        BPSK       0.49      0.65      0.56     36000
+       CPFSK       0.71      0.61      0.66     36000
+        GFSK       0.61      0.71      0.65     36000
+        PAM4       0.80      0.68      0.74     36000
+       QAM16       0.40      0.30      0.34     36000
+       QAM64       0.52      0.42      0.46     36000
+        QPSK       0.52      0.32      0.40     36000
+        WBFM       0.67      0.32      0.43     36000
+
+    accuracy                           0.52    360000
+   macro avg       0.55      0.52      0.52    360000
+weighted avg       0.55      0.52      0.52    360000
+```
+
+- Most confused class: AM-DSB, WBFM
+- Accuracy at SNR = 0 is 0.71
+
+![png](img/1snr4.png)
+![png](img/2snr4.png)
+![png](img/3snr4.png)
+![png](img/4snr4.png)
+![png](img/5snr4.png)
+![png](img/6snr4.png)
+![png](img/7snr4.png)
+![png](img/8snr4.png)
+![png](img/9snr4.png)
+![png](img/10snr4.png)
+![png](img/11snr4.png)
+
 #### 1.2.3.9. Combination Raw and Integral
 
 - Learning rate scheduler: step decay
@@ -777,6 +914,40 @@ Learning rate: 0.0001
 ![RNN Raw Integral](img/rnn-rawint-acc.png)
 ![RNN Raw Integral](img/rnn-rawint-SNRacc.png)
 
+```text
+              precision    recall  f1-score   support
+
+        8PSK       0.37      0.34      0.35     36000
+      AM-DSB       0.47      0.79      0.59     36000
+        BPSK       0.66      0.59      0.63     36000
+       CPFSK       0.67      0.61      0.64     36000
+        GFSK       0.71      0.69      0.70     36000
+        PAM4       0.83      0.64      0.72     36000
+       QAM16       0.41      0.15      0.22     36000
+       QAM64       0.51      0.45      0.48     36000
+        QPSK       0.24      0.53      0.33     36000
+        WBFM       0.73      0.26      0.38     36000
+
+    accuracy                           0.51    360000
+   macro avg       0.56      0.51      0.50    360000
+weighted avg       0.56      0.51      0.50    360000
+```
+
+- Most confused class: QPSK 
+- Accuracy at SNR = 0 is 0.70
+
+![png](img/1snr5.png)
+![png](img/2snr5.png)
+![png](img/3snr5.png)
+![png](img/4snr5.png)
+![png](img/5snr5.png)
+![png](img/6snr5.png)
+![png](img/7snr5.png)
+![png](img/8snr5.png)
+![png](img/9snr5.png)
+![png](img/10snr5.png)
+![png](img/11snr5.png)
+
 #### 1.2.3.10. Combination Derivative and Integral
 
 - Learning rate scheduler: step decay
@@ -793,6 +964,41 @@ Learning rate: 0.0001
 
 ![RNN Derivative Integral](img/rnn-diffint-acc.png)
 ![RNN Derivative Integral](img/rnn-diffint-SNRacc.png)
+
+```text
+              precision    recall  f1-score   support
+
+        8PSK       0.33      0.44      0.37     36000
+      AM-DSB       0.51      0.65      0.57     36000
+        BPSK       0.54      0.64      0.59     36000
+       CPFSK       0.73      0.59      0.65     36000
+        GFSK       0.54      0.74      0.62     36000
+        PAM4       0.82      0.67      0.74     36000
+       QAM16       0.34      0.14      0.20     36000
+       QAM64       0.51      0.55      0.53     36000
+        QPSK       0.52      0.38      0.44     36000
+        WBFM       0.42      0.41      0.42     36000
+
+    accuracy                           0.52    360000
+   macro avg       0.53      0.52      0.51    360000
+weighted avg       0.53      0.52      0.51    360000
+```
+
+- Most confused class: QAM16, QAM64 
+- Accuracy at SNR = 0 is 0.73
+
+![png](img/1snr6.png)
+![png](img/2snr6.png)
+![png](img/3snr6.png)
+![png](img/4snr6.png)
+![png](img/5snr6.png)
+![png](img/6snr6.png)
+![png](img/7snr6.png)
+![png](img/8snr6.png)
+![png](img/9snr6.png)
+![png](img/10snr6.png)
+![png](img/11snr6.png)
+
 
 ### 1.2.4. LSTM model
 
