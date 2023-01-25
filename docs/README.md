@@ -918,17 +918,17 @@ _________________________________________________________________
 weighted avg       0.57      0.52      0.51    360000
 ```
 
-![PNG](img/lstmexp3snr1.png)
-![PNG](img/lstmexp3snr2.png)
-![PNG](img/lstmexp3snr3.png)
-![PNG](img/lstmexp3snr4.png)
-![PNG](img/lstmexp3snr5.png)
-![PNG](img/lstmexp3snr6.png)
-![PNG](img/lstmexp3snr7.png)
-![PNG](img/lstmexp3snr8.png)
-![PNG](img/lstmexp3snr9.png)
-![PNG](img/lstmexp3snr10.png)
-![PNG](img/lstmexp3snr11.png)
+![PNG](img/lstmexp3snr1.PNG)
+![PNG](img/lstmexp3snr2.PNG)
+![PNG](img/lstmexp3snr3.PNG)
+![PNG](img/lstmexp3snr4.PNG)
+![PNG](img/lstmexp3snr5.PNG)
+![PNG](img/lstmexp3snr6.PNG)
+![PNG](img/lstmexp3snr7.PNG)
+![PNG](img/lstmexp3snr8.PNG)
+![PNG](img/lstmexp3snr9.PNG)
+![PNG](img/lstmexp3snr10.PNG)
+![PNG](img/lstmexp3snr11.PNG)
 
 #### 1.2.4.4. With First Derivative
 
@@ -966,17 +966,17 @@ weighted avg       0.57      0.52      0.51    360000
 weighted avg       0.28      0.31      0.27    360000
 ```
 
-![PNG](img/lstmdiff1.png)
-![PNG](img/lstmdiff2.png)
-![PNG](img/lstmdiff3.png)
-![PNG](img/lstmdiff4.png)
-![PNG](img/lstmdiff5.png)
-![PNG](img/lstmdiff6.png)
-![PNG](img/lstmdiff7.png)
-![PNG](img/lstmdiff8.png)
-![PNG](img/lstmdiff9.png)
-![PNG](img/lstmdiff10.png)
-![PNG](img/lstmdiff11.png)
+![PNG](img/lstmdiff1.PNG)
+![PNG](img/lstmdiff2.PNG)
+![PNG](img/lstmdiff3.PNG)
+![PNG](img/lstmdiff4.PNG)
+![PNG](img/lstmdiff5.PNG)
+![PNG](img/lstmdiff6.PNG)
+![PNG](img/lstmdiff7.PNG)
+![PNG](img/lstmdiff8.PNG)
+![PNG](img/lstmdiff9.PNG)
+![PNG](img/lstmdiff10.PNG)
+![PNG](img/lstmdiff11.PNG)
 
 #### 1.2.4.5. With Integral
 
@@ -1014,17 +1014,17 @@ precision    recall  f1-score   support
 weighted avg       0.57      0.53      0.52    360000
 ```
 
-![PNG](img/lstmdintsnr1.png)
-![PNG](img/lstmintsnr2.png)
-![PNG](img/lstmintsnr3.png)
-![PNG](img/lstmintsnr4.png)
-![PNG](img/lstmintsnr5.png)
-![PNG](img/lstmintsnr6.png)
-![PNG](img/lstmintsnr7.png)
-![PNG](img/lstmintsnr8.png)
-![PNG](img/lstmintsnr9.png)
-![PNG](img/lstmintsnr10.png)
-![PNG](img/lstmintsnr11.png)
+![PNG](img/lstmdintsnr1.PNG)
+![PNG](img/lstmintsnr2.PNG)
+![PNG](img/lstmintsnr3.PNG)
+![PNG](img/lstmintsnr4.PNG)
+![PNG](img/lstmintsnr5.PNG)
+![PNG](img/lstmintsnr6.PNG)
+![PNG](img/lstmintsnr7.PNG)
+![PNG](img/lstmintsnr8.PNG)
+![PNG](img/lstmintsnr9.PNG)
+![PNG](img/lstmintsnr10.PNG)
+![PNG](img/lstmintsnr11.PNG)
 
 #### 1.2.4.6. Combination Raw and Derivative
 
@@ -1061,17 +1061,17 @@ weighted avg       0.57      0.53      0.52    360000
 weighted avg       0.57      0.52      0.57    360000
 ```
 
-![PNG](img/lstmrdsnr1.png)
-![PNG](img/lstmrdsnr2.png)
-![PNG](img/lstmrdsnr3.png)
-![PNG](img/lstmrdsnr4.png)
-![PNG](img/lstmrdsnr5.png)
-![PNG](img/lstmrdsnr6.png)
-![PNG](img/lstmrdsnr7.png)
-![PNG](img/lstmrdsnr8.png)
-![PNG](img/lstmrdsnr9.png)
-![PNG](img/lstmrdsnr10.png)
-![PNG](img/lstmrdsnr11.png)
+![PNG](img/lstmrdsnr1.PNG)
+![PNG](img/lstmrdsnr2.PNG)
+![PNG](img/lstmrdsnr3.PNG)
+![PNG](img/lstmrdsnr4.PNG)
+![PNG](img/lstmrdsnr5.PNG)
+![PNG](img/lstmrdsnr6.PNG)
+![PNG](img/lstmrdsnr7.PNG)
+![PNG](img/lstmrdsnr8.PNG)
+![PNG](img/lstmrdsnr9.PNG)
+![PNG](img/lstmrdsnr10.PNG)
+![PNG](img/lstmrdsnr11.PNG)
 
 #### 1.2.4.7. Combination Raw and Integral
 
@@ -1108,17 +1108,17 @@ weighted avg       0.57      0.52      0.57    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
 
-![PNG](img/lstmrisnr1.png)
-![PNG](img/lstmrisnr2.png)
-![PNG](img/lstmrisnr3.png)
-![PNG](img/lstmrisnr4.png)
-![PNG](img/lstmrisnr5.png)
-![PNG](img/lstmrisnr6.png)
-![PNG](img/lstmrisnr7.png)
-![PNG](img/lstmrisnr8.png)
-![PNG](img/lstmrisnr9.png)
-![PNG](img/lstmrisnr10.png)
-![PNG](img/lstmrisnr11.png)
+![PNG](img/lstmrisnr1.PNG)
+![PNG](img/lstmrisnr2.PNG)
+![PNG](img/lstmrisnr3.PNG)
+![PNG](img/lstmrisnr4.PNG)
+![PNG](img/lstmrisnr5.PNG)
+![PNG](img/lstmrisnr6.PNG)
+![PNG](img/lstmrisnr7.PNG)
+![PNG](img/lstmrisnr8.PNG)
+![PNG](img/lstmrisnr9.PNG)
+![PNG](img/lstmrisnr10.PNG)
+![PNG](img/lstmrisnr11.PNG)
 
 #### 1.2.4.8. Combination Derivative and Integral
 
@@ -1155,17 +1155,17 @@ weighted avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
 
-![PNG](img/lstmdisnr1.png)
-![PNG](img/lstmdisnr2.png)
-![PNG](img/lstmdisnr3.png)
-![PNG](img/lstmdisnr4.png)
-![PNG](img/lstmdisnr5.png)
-![PNG](img/lstmdisnr6.png)
-![PNG](img/lstmdisnr7.png)
-![PNG](img/lstmdisnr8.png)
-![PNG](img/lstmdisnr9.png)
-![PNG](img/lstmdisnr10.png)
-![PNG](img/lstmdisnr11.png)
+![PNG](img/lstmdisnr1.PNG)
+![PNG](img/lstmdisnr2.PNG)
+![PNG](img/lstmdisnr3.PNG)
+![PNG](img/lstmdisnr4.PNG)
+![PNG](img/lstmdisnr5.PNG)
+![PNG](img/lstmdisnr6.PNG)
+![PNG](img/lstmdisnr7.PNG)
+![PNG](img/lstmdisnr8.PNG)
+![PNG](img/lstmdisnr9.PNG)
+![PNG](img/lstmdisnr10.PNG)
+![PNG](img/lstmdisnr11.PNG)
 
 ### 1.2.5. Transformer Encoder Model
 
