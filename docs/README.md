@@ -823,7 +823,7 @@ Learning rate: 0.0009
 | Validation accuracy | 0.3837 |
 | Number of epochs    | 100    |
 
-![Experiment1 ](img/lstmexp1.png)
+![Experiment1 ](img/lstmexp1.PNG)
 
 #### 1.2.4.2. Experiment 2
 
@@ -859,7 +859,7 @@ Learning rate: 0.0001
 | Validation accuracy | 0.4999 |
 | Number of epochs    | 100    |
 
-![Experiment2](img/lstmexp2.png)
+![Experiment2](img/lstmexp2.PNG)
 
 #### 1.2.4.3. Experiment 3 (final version)
 
@@ -897,7 +897,7 @@ _________________________________________________________________
 | Validation accuracy | 0.5200 |
 | Number of epochs    | 100    |
 
-![Experiment3](img/lstmexp3.png)
+![Experiment3](img/lstmexp3.PNG)
 
 ```text
  precision    recall  f1-score   support
@@ -945,7 +945,7 @@ weighted avg       0.57      0.52      0.51    360000
 | Test accuracy       | 0.31   |
 | Number of epochs    | 100    |
 
-![Derivative](img/lstmdiff.png)
+![Derivative](img/lstmdiff.PNG)
 
 ```text
           precision    recall  f1-score   support
@@ -993,7 +993,7 @@ weighted avg       0.28      0.31      0.27    360000
 | Test accuracy       | 0.53   |
 | Number of epochs    | 100    |
 
-![Integral](img/lstmint.png)
+![Integral](img/lstmint.PNG)
 
 ```text
 precision    recall  f1-score   support
@@ -1040,7 +1040,7 @@ weighted avg       0.57      0.53      0.52    360000
 | Test accuracy       | 0.58   |
 | Number of epochs    | 100    |
 
-![Raw Derivative](img/lstmrd.png)
+![Raw Derivative](img/lstmrd.PNG)
 
 ```text
            precision    recall  f1-score   support
@@ -1087,7 +1087,7 @@ weighted avg       0.57      0.52      0.57    360000
 | Test accuracy       | 0.52   |
 | Number of epochs    | 100    |
 
-![Raw Integral](img/rnn-rawint-acc.png)
+![Raw Integral](img/rnn-rawint-acc.PNG)
 
 ```text
           precision    recall  f1-score   support
@@ -1134,7 +1134,7 @@ weighted avg       0.57      0.52      0.51    360000
 | Test accuracy       | 0.52   |
 | Number of epochs    | 100    |
 
-![Derivative Integral](img/lstmdi.png)
+![Derivative Integral](img/lstmdi.PNG)
 
 ```text
           precision    recall  f1-score   support
