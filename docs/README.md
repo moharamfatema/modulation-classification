@@ -1123,6 +1123,8 @@ _________________________________________________________________
    macro avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
+- Most confused class: 8PSK,QPSK
+- Accuracy at SNR = 0 is 0.5180
 
 ![PNG](img/lstmexp3snr1.PNG)
 ![PNG](img/lstmexp3snr2.PNG)
@@ -1172,6 +1174,9 @@ weighted avg       0.57      0.52      0.51    360000
 weighted avg       0.28      0.31      0.27    360000
 ```
 
+- Most confused class: 8PSK,QPSK
+- Accuracy at SNR = 0 is 0.3963
+
 ![PNG](img/lstmdiff1.PNG)
 ![PNG](img/lstmdiff2.PNG)
 ![PNG](img/lstmdiff3.PNG)
@@ -1219,6 +1224,8 @@ precision    recall  f1-score   support
    macro avg       0.57      0.53      0.52    360000
 weighted avg       0.57      0.53      0.52    360000
 ```
+- Most confused class: 8PSK
+- Accuracy at SNR = 0 is 0.5230
 
 ![PNG](img/lstmdintsnr1.PNG)
 ![PNG](img/lstmintsnr2.PNG)
@@ -1266,6 +1273,8 @@ weighted avg       0.57      0.53      0.52    360000
    macro avg       0.57      0.52      0.58    360000
 weighted avg       0.57      0.52      0.57    360000
 ```
+- Most confused class: 8PSK
+- Accuracy at SNR = 0 is 0.5170
 
 ![PNG](img/lstmrdsnr1.PNG)
 ![PNG](img/lstmrdsnr2.PNG)
@@ -1293,7 +1302,7 @@ weighted avg       0.57      0.52      0.57    360000
 | Test accuracy       | 0.52   |
 | Number of epochs    | 100    |
 
-![Raw Integral](img/rnn-rawint-acc.PNG)
+![Raw Integral](img/lstmri.PNG)
 
 ```text
           precision    recall  f1-score   support
@@ -1313,6 +1322,8 @@ weighted avg       0.57      0.52      0.57    360000
    macro avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
+- Most confused class: 8PSK
+- Accuracy at SNR = 0 is 0.468
 
 ![PNG](img/lstmrisnr1.PNG)
 ![PNG](img/lstmrisnr2.PNG)
@@ -1360,6 +1371,8 @@ weighted avg       0.57      0.52      0.51    360000
    macro avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
+- Most confused class: 8PSK
+- Accuracy at SNR = 0 is 0.52
 
 ![PNG](img/lstmdisnr1.PNG)
 ![PNG](img/lstmdisnr2.PNG)
