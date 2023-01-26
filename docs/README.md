@@ -4,6 +4,13 @@
 [![Binder][binder-badge]][binder]
 [![License][license-badge]][license]
 
+
+| Name           | ID   |
+| -------------- | ---- |
+| Fatema Moharam | 6655 |
+| Aya Naga       | 6376 |
+| Mariam Bardesy | 6200 |
+
 - [1. Modulation Classification](#1-modulation-classification)
   - [1.1. The Dataset](#11-the-dataset)
     - [1.1.1. Reading the dataset](#111-reading-the-dataset)
