@@ -6,7 +6,11 @@
 
 - [1. Modlation Classification](#1-modlation-classification)
   - [1.1. The Dataset](#11-the-dataset)
+    - [Reading the dataset](#reading-the-dataset)
+    - [Exploring the dataset](#exploring-the-dataset)
+    - [Splitting the dataset](#splitting-the-dataset)
     - [1.1.1. Feature spaces](#111-feature-spaces)
+      - [Preprocessing](#preprocessing)
   - [1.2. The Models](#12-the-models)
     - [1.2.1. Hyperparameters](#121-hyperparameters)
     - [1.2.2. CNN model](#122-cnn-model)
@@ -48,6 +52,44 @@
 
 The RadioML 2016.10 is a dataset of modulated radio signals. The dataset contains 10 different modulations: 8PSK, AM-DSB , BPSK, CPFSK, GFSK, PAM4, QAM16, QAM64, QPSK, and WBFM.
 
+### Reading the dataset
+
+```python
+# from https://github.com/radioML/examples/blob/master/modulation_recognition/RML2016.10a_VTCNN2_example.ipynb
+# modified for python 3
+Xd = pickle.load(open(DAT, 'rb'), encoding='latin1')
+snrs,mods = map(lambda j: sorted(list(set(map(lambda x: x[j], Xd.keys())))), [1,0])
+X = []
+lbl = []
+for mod in mods:
+    for snr in snrs:
+        X.append(Xd[(mod,snr)])
+        for i in range(Xd[(mod,snr)].shape[0]):  lbl.append((mod,snr))
+del Xd, snrs, mods
+X = np.vstack(X)
+X = np.moveaxis(X, 1, -1)
+X = X / np.max(X)
+y = np.array(lbl)
+del lbl
+gc.collect()
+X.shape, y.shape
+```
+
+### Exploring the dataset
+
+```python
+# The labels
+print(f'{np.unique(y[:,0],return_counts=True)}\n\n\
+{np.unique(y[:,1],return_counts=True)}')
+```
+
+```python
+plt.plot(X[0,:,0])
+plt.plot(X[0,:,1])
+plt.title(f'{y[0,0]} , {y[0,1]}')
+plt.show()
+```
+
 The dataset contains 1 200 000 samples. Each sample is a 2-channel signal with 128 samples per channel.
 
 An example of a 2-channel signal:
@@ -58,21 +100,192 @@ The dataset contains 120 000 samples per modulation.
 
 The dataset contains 20 SNR levels. Each SNR level contains 60 000 samples per modulation.
 
+### Splitting the dataset
+
+```python
+def split(x,y):
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state =1, stratify = y[:,0])
+    x_train, x_val, y_train, y_val = train_test_split(x_train, y_train, test_size = 0.05, random_state =1, stratify = y_train[:,0])
+    return x_train, x_val, x_test, y_train, y_val, y_test
+```
+
 The dataset is split into 3 subsets: training, validation, and testing.
 
 Test set is 30 %. The remaining 70 % is split into training and validation sets. The training set is 95 % of the remaining 70 %, and the validation set is 5 % of the remaining 70 %.
 
 ### 1.1.1. Feature spaces
 
+Possible feature spaces:
+
+1. raw signal
+2. derivative
+3. integration
+4. raw and derivative
+5. raw and integration
+6. derivative and integration
+7. raw and derivative and integration
+
+```python
+X_diff = np.gradient(X,axis=-1)
+X_int = np.zeros_like(X)
+X_int[:,:,:-1] = np.array(cumulative_trapezoid(X))
+
+X_raw_diff = np.concatenate((X,X_diff),axis=1)
+X_raw_int = np.concatenate((X,X_int),axis=1)
+X_diff_int = np.concatenate((X_diff,X_int),axis=1)
+
+X_all = np.concatenate((X,X_diff,X_int),axis=1)
+```
+
 An example of a differentiated signal:
+
+```python
+d_np = np.gradient(X[0,:,0])
+
+lines=[d_np,X[0,:,0]]
+
+t = np.linspace(0,127,128)
+
+fig = go.Figure()
+fig.add_trace(go.Line(x=t,y=lines[0],name=f'derivative'))
+fig.add_trace(go.Line(x=t,y=lines[1],name=f'original signal'))
+
+fig.show()
+```
 
  ![Differentiated signal](img/diff.png)
 
 An example of an integrated signal:
 
+```python
+i_ct = cumulative_trapezoid(X[0,:,0])
+
+lines=[i_ct,X[0,:,0]]
+
+t = np.linspace(0,127,128)
+
+fig = go.Figure()
+fig.add_trace(go.Line(x=t,y=lines[0],name=f'cumulative trapezoid'))
+
+fig.add_trace(go.Line(x=t,y=lines[1],name=f'original signal'))
+
+fig.show()
+```
+
   ![Integrated signal](img/int.png)
 
+#### Preprocessing
+
+The labels are one-hot encoded.
+
+```python
+encoder = OneHotEncoder(sparse=False)
+encoder.fit(y_test[:,0].reshape(-1,1))
+y_test_encoded = encoder.transform(y_test[:,0].reshape(-1,1))
+y_train_encoded = encoder.transform(y_train[:,0].reshape(-1,1))
+y_val_encoded = encoder.transform(y_val[:,0].reshape(-1,1))
+```
+
 ## 1.2. The Models
+
+Learning rate scheduler and checkpoints are configured.
+
+```python
+values = np.linspace(0.00001,LEARNING_RATE,10)[::-1]
+boundaries = np.linspace(5, 100,9)[:values.shape[0]-1].astype(np.int32)
+
+scheduler = keras.optimizers.schedules.PiecewiseConstantDecay(
+    list(boundaries), list(values))
+
+lr_scheduler = tf.keras.callbacks.LearningRateScheduler(scheduler,verbose=1)
+
+early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience = PATIENCE, mode='min')
+
+def configure_checkpoints(path):
+    return keras.callbacks.ModelCheckpoint(
+        filepath=path,
+        save_weights_only=True,
+        monitor='val_loss',
+        mode='min',
+        save_best_only=True)
+```
+
+The training process is configured with early stopping.
+
+```python
+def train_and_plot(model,checkpoint_path,x_train,y_train,x_val,y_val,epochs=EPOCHS,batch_size=512):
+    checkpoint = configure_checkpoints(checkpoint_path)
+    history=model.fit(
+        x=x_train,
+        y=y_train,
+        batch_size=batch_size,
+        epochs=epochs,
+        validation_data=(x_val,y_val),
+        callbacks=[lr_scheduler,checkpoint,early_stopping]
+    )
+
+    num=len(history.history['loss'])
+
+    plt.plot(range(num),history.history['loss'],label = 'training loss')
+    plt.plot(range(num),history.history['val_loss'],label = 'validation loss')
+
+    plt.legend()
+
+    plt.xlabel("Epochs ")
+    plt.ylabel('Loss')
+
+    plt.figure()
+
+    plt.plot(range(num),history.history['accuracy'],label = 'training accuracy')
+    plt.plot(range(num),history.history['val_accuracy'],label = 'validation accuracy')
+
+    plt.legend()
+    plt.xlabel("Epochs ")
+    return history
+```
+
+The evaluation process is configured.
+
+```python
+def eval_model(model,x,y,y_encoded):
+    y_pred = model.predict(x.reshape(x.shape+(1,)))
+    y_pred = np.argmax(y_pred,axis = -1)
+    y_numbers = np.argmax(y_encoded,axis=-1)
+
+    target_names = np.unique(y[:,0])
+    labels = target_names
+    tick_marks = np.arange(len(labels))
+
+    print(classification_report(y_numbers, y_pred, target_names=target_names))
+
+    cm = tf.math.confusion_matrix(y_numbers,y_pred).numpy().astype(np.int64)
+    cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=3)
+    sns.heatmap(cm,annot=True)
+    plt.xticks(tick_marks, labels, rotation= 45)
+    plt.yticks(tick_marks, labels, rotation=-45)
+
+    plt.figure()
+    snrs = np.unique(y[:,1])
+
+    accuracies = np.zeros_like(snrs,dtype=np.float32)
+    for i, snr in enumerate(snrs):
+        idx = y[:,1] == snr
+        cm = tf.math.confusion_matrix(y_numbers[idx],y_pred[idx]).numpy().astype(np.int64)
+        cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=3)
+
+        sns.heatmap(cm,annot=True)
+        plt.title(f"SNR = {snr}")
+        plt.xticks(tick_marks, labels, rotation= 45)
+        plt.yticks(tick_marks, labels, rotation=-45)
+        plt.show()
+        plt.figure()
+        accuracies[i] = np.count_nonzero(y_numbers[idx] == y_pred[idx]) / y_pred[idx].shape[0]
+
+    plt.plot(snrs,np.around(accuracies * 100,2))
+    plt.xlabel('SNR')
+    plt.ylabel("Accuracy")
+    plt.show()
+```
 
 ### 1.2.1. Hyperparameters
 
@@ -83,6 +296,44 @@ An example of an integrated signal:
 | Max epochs     | 100        |
 
 ### 1.2.2. CNN model
+
+```python
+EPOCHS = 100
+PATIENCE = 6
+LEARNING_RATE = 0.0009
+
+X = X[:,:,np.newaxis,:]
+```
+
+The data is reshaped to fit the CNN model.
+
+```python
+def create_cnn(name,cnn_input_shape):
+    cnn_model = keras.Sequential([
+        layers.Conv2D(64,
+                    kernel_size=3,
+                    activation='relu',
+                      padding='same',
+                    input_shape=cnn_input_shape),
+        layers.BatchNormalization(), # This was added later
+        layers.Conv2D(16,
+                     kernel_size=3,
+                      strides=2,
+                      padding='same',
+                     activation='relu'),
+        layers.BatchNormalization(),  # This was added later
+        layers.Flatten(),
+        layers.Dense(128,activation='relu'),
+        layers.Dense(10,activation='softmax'),
+    ],name=name)
+
+    optimizer = keras.optimizers.Adam(learning_rate=LEARNING_RATE)
+    loss = keras.losses.CategoricalCrossentropy()
+    cnn_model.compile(optimizer=optimizer,loss=loss,metrics=['accuracy'])
+
+    print(cnn_model.summary())
+    return cnn_model
+```
 
 ![CNN model][cnn-model]
 
@@ -254,6 +505,11 @@ weighted avg       0.55      0.55      0.55    360000
 ![png](modulation_classification_cnn/output_41_22.png)
 
 #### 1.2.2.6. Differentiated Signal CNN
+
+```python
+x = np.gradient(X,axis=-1)
+cnn_diff_model = create_cnn("cnn_diff",x.shape[1:])
+```
 
 | Parameter           | Value  |
 | ------------------- | ------ |
@@ -933,7 +1189,7 @@ weighted avg       0.55      0.52      0.52    360000
 weighted avg       0.56      0.51      0.50    360000
 ```
 
-- Most confused class: QPSK 
+- Most confused class: QPSK
 - Accuracy at SNR = 0 is 0.70
 
 ![png](img/1snr5.png)
@@ -984,7 +1240,7 @@ weighted avg       0.56      0.51      0.50    360000
 weighted avg       0.53      0.52      0.51    360000
 ```
 
-- Most confused class: QAM16, QAM64 
+- Most confused class: QAM16, QAM64
 - Accuracy at SNR = 0 is 0.73
 
 ![png](img/1snr6.png)
@@ -998,7 +1254,6 @@ weighted avg       0.53      0.52      0.51    360000
 ![png](img/9snr6.png)
 ![png](img/10snr6.png)
 ![png](img/11snr6.png)
-
 
 ### 1.2.4. LSTM model
 
@@ -1123,6 +1378,7 @@ _________________________________________________________________
    macro avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
+
 - Most confused class: 8PSK,QPSK
 - Accuracy at SNR = 0 is 0.5180
 
@@ -1224,6 +1480,7 @@ precision    recall  f1-score   support
    macro avg       0.57      0.53      0.52    360000
 weighted avg       0.57      0.53      0.52    360000
 ```
+
 - Most confused class: 8PSK
 - Accuracy at SNR = 0 is 0.5230
 
@@ -1273,6 +1530,7 @@ weighted avg       0.57      0.53      0.52    360000
    macro avg       0.57      0.52      0.58    360000
 weighted avg       0.57      0.52      0.57    360000
 ```
+
 - Most confused class: 8PSK
 - Accuracy at SNR = 0 is 0.5170
 
@@ -1322,6 +1580,7 @@ weighted avg       0.57      0.52      0.57    360000
    macro avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
+
 - Most confused class: 8PSK
 - Accuracy at SNR = 0 is 0.468
 
@@ -1371,6 +1630,7 @@ weighted avg       0.57      0.52      0.51    360000
    macro avg       0.57      0.52      0.51    360000
 weighted avg       0.57      0.52      0.51    360000
 ```
+
 - Most confused class: 8PSK
 - Accuracy at SNR = 0 is 0.52
 
