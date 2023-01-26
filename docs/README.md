@@ -1278,6 +1278,61 @@ weighted avg       0.53      0.52      0.51    360000
 ![png](img/11snr6.png)
 
 ### 1.2.4. LSTM model
+#### code
+
+```python
+#model
+
+def create_lstm1(size):
+
+
+    model = keras.Sequential()
+    model.add(keras.layers.LSTM(22, input_shape=x.shape[1:]))
+    model.add(keras.layers.Dense(10, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    print(model.summary())
+    return model
+def create_lstm(size):
+
+
+    model = keras.Sequential()
+    model.add(keras.layers.LSTM(128, input_shape=x.shape[1:]))
+ 
+
+    # for units in [128,128,64,32]:
+
+    # model.add(Dense(units,activation='relu'))
+
+    # model.add(Dropout(0.2))
+    model.add(keras.layers.Dense(64,activation='relu'))
+    model.add(keras.layers.Dense(32,activation='relu'))
+
+    model.add(keras.layers.Dropout(0.2))
+    model.add(keras.layers.Dense(10, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    print(model.summary())
+    return model
+def create_lstm2(size):
+
+
+    model = keras.Sequential()
+    model.add(keras.layers.LSTM(256, input_shape=x.shape[1:]))
+ 
+
+    # for units in [128,128,64,32]:
+
+    # model.add(Dense(units,activation='relu'))
+
+    # model.add(Dropout(0.2))
+    model.add(keras.layers.Dense(128,activation='relu'))
+    model.add(keras.layers.Dense(64,activation='relu'))
+    model.add(keras.layers.Dense(32,activation='relu'))
+    model.add(keras.layers.Dropout(0.2))
+    model.add(keras.layers.Dense(10, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    print(model.summary())
+    return model
+```
 
 #### 1.2.4.1. Experiment 1
 
