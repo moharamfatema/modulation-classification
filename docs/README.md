@@ -898,6 +898,20 @@ X_embed.shape
 
 ### 1.2.3. RNN model
 
+```python
+def create_rnn(name,rnn_input_shape):
+    rnn_model = keras.Sequential()
+    rnn_model.add(keras.layers.SimpleRNN(units=128, input_shape=(rnn_input_shape), activation="relu", return_sequences=True))
+    rnn_model.add(keras.layers.SimpleRNN(units=64, activation="relu"))
+    rnn_model.add(layers.Dense(units=10, activation="softmax"))
+    optimizer = keras.optimizers.Adam(learning_rate=LEARNING_RATE)
+    loss = keras.losses.CategoricalCrossentropy()
+    rnn_model.compile(optimizer=optimizer,loss=loss,metrics=['accuracy'])
+
+    print(rnn_model.summary())
+    return rnn_model
+```
+
 ```text
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #
