@@ -6,4 +6,3 @@ seaborn
 tensorflow
 keras_nlp
 scikit-learn
-gc
