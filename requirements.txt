@@ -5,6 +5,5 @@ plotly
 seaborn
 tensorflow
 keras_nlp
-pickle
+scikit-learn
 gc
-sklearn

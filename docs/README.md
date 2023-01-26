@@ -1670,6 +1670,32 @@ weighted avg       0.57      0.52      0.51    360000
 
 ### 1.2.5. Transformer Encoder Model
 
+```python
+def create_transformer(name,input_shape,num_layers=4,dropout=0.2):
+
+    encoder = keras_nlp.layers.TransformerEncoder(
+        intermediate_dim=64, num_heads=8)
+
+    input = keras.Input(shape=input_shape)
+    x = encoder(input)
+    x = layers.LayerNormalization()(x)
+
+    for _ in range(num_layers - 1):
+        x = encoder(x)
+        x = layers.LayerNormalization()(x)
+
+    x = layers.Flatten()(x)
+    x = layers.Dense(10,activation='softmax')(x)
+    model = keras.Model(inputs=input, outputs=x)
+
+    optimizer = keras.optimizers.Adam(learning_rate=LEARNING_RATE)
+    loss = keras.losses.CategoricalCrossentropy()
+    model.compile(optimizer=optimizer,loss=loss,metrics=['accuracy'])
+
+    print(model.summary())
+    return model
+```
+
 Model
 
 ```text
@@ -1713,6 +1739,13 @@ Model
 - Start learning rate: 0.0009
 
 #### 1.2.5.2. Combination Raw and Derivative
+
+```python
+X =np.moveaxis(X,-1,1)
+x_diff = np.gradient(X,axis=-1)
+
+x_all = np.concatenate((X,x_diff),axis=1)
+```
 
 | Parameter           | Value  |
 | ------------------- | ------ |
@@ -1835,6 +1868,18 @@ Accuracy at SNR = 8 is 0.7200000286102295 %
 
 #### 1.2.5.3. Embedding (SNR)
 
+```python
+SNR = np.array(y[:,1])[:,np.newaxis,np.newaxis].astype(int).repeat(2,axis=-1)
+SNR[0]
+X_embed =np.moveaxis( np.concatenate((X,SNR),axis=1),-1,1)
+```
+
+```python
+SNR.shape, X_embed.shape
+```
+
+>((1200000, 1, 2), (1200000, 2, 129))
+
 | Parameter           | Value  |
 | ------------------- | ------ |
 | Training Loss       | 0.9943 |
@@ -1954,7 +1999,7 @@ Accuracy at SNR = 8 is 70.82 %
 ![png](modulation_classification_transformer/output_32_42.png)
 
 <!-- References -->
-[github]: github.com/moharamfatema/modulation-classification
+[github]: https://github.com/moharamfatema/modulation-classification
 [github-badge]: https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white
 
 [license]: https://github.com/moharamfatema/modulation-classification/blob/main/COPYING
