@@ -1,16 +1,16 @@
-# 1. Modlation Classification
+# 1. Modulation Classification
 
 [![GitHub][github-badge]][github]
 [![Binder][binder-badge]][binder]
 [![License][license-badge]][license]
 
-- [1. Modlation Classification](#1-modlation-classification)
+- [1. Modulation Classification](#1-modulation-classification)
   - [1.1. The Dataset](#11-the-dataset)
-    - [Reading the dataset](#reading-the-dataset)
-    - [Exploring the dataset](#exploring-the-dataset)
-    - [Splitting the dataset](#splitting-the-dataset)
-    - [1.1.1. Feature spaces](#111-feature-spaces)
-      - [Preprocessing](#preprocessing)
+    - [1.1.1. Reading the dataset](#111-reading-the-dataset)
+    - [1.1.2. Exploring the dataset](#112-exploring-the-dataset)
+    - [1.1.3. Splitting the dataset](#113-splitting-the-dataset)
+    - [1.1.4. Feature spaces](#114-feature-spaces)
+      - [1.1.4.1. Preprocessing](#1141-preprocessing)
   - [1.2. The Models](#12-the-models)
     - [1.2.1. Hyperparameters](#121-hyperparameters)
     - [1.2.2. CNN model](#122-cnn-model)
@@ -52,7 +52,7 @@
 
 The RadioML 2016.10 is a dataset of modulated radio signals. The dataset contains 10 different modulations: 8PSK, AM-DSB , BPSK, CPFSK, GFSK, PAM4, QAM16, QAM64, QPSK, and WBFM.
 
-### Reading the dataset
+### 1.1.1. Reading the dataset
 
 ```python
 # from https://github.com/radioML/examples/blob/master/modulation_recognition/RML2016.10a_VTCNN2_example.ipynb
@@ -75,7 +75,7 @@ gc.collect()
 X.shape, y.shape
 ```
 
-### Exploring the dataset
+### 1.1.2. Exploring the dataset
 
 ```python
 # The labels
@@ -100,7 +100,7 @@ The dataset contains 120 000 samples per modulation.
 
 The dataset contains 20 SNR levels. Each SNR level contains 60 000 samples per modulation.
 
-### Splitting the dataset
+### 1.1.3. Splitting the dataset
 
 ```python
 def split(x,y):
@@ -113,7 +113,7 @@ The dataset is split into 3 subsets: training, validation, and testing.
 
 Test set is 30 %. The remaining 70 % is split into training and validation sets. The training set is 95 % of the remaining 70 %, and the validation set is 5 % of the remaining 70 %.
 
-### 1.1.1. Feature spaces
+### 1.1.4. Feature spaces
 
 Possible feature spaces:
 
@@ -174,7 +174,7 @@ fig.show()
 
   ![Integrated signal](img/int.png)
 
-#### Preprocessing
+#### 1.1.4.1. Preprocessing
 
 The labels are one-hot encoded.
 
@@ -591,6 +591,14 @@ cnn_diff_model = create_cnn("cnn_diff",x.shape[1:])
 
 #### 1.2.2.7. Integrated Signal
 
+```python
+x = np.zeros_like(X)
+x[:,:-1,:,:] = cumulative_trapezoid(X,axis=1)
+SNR = np.array(y[:,1]).astype(int)[:,np.newaxis,np.newaxis,np.newaxis].repeat(2,axis=-1)
+x = np.concatenate((x,SNR),axis=1)
+x.shape
+```
+
 | Parameter           | Value  |
 | ------------------- | ------ |
 | Training loss       | 0.9085 |
@@ -712,6 +720,14 @@ Accuracy at SNR = 8 is 0.8100000023841858 %
 
 #### 1.2.2.8. Combined Features
 
+```python
+x_diff = np.gradient(X,axis=-1)
+x_int = np.zeros_like(X)
+x_int[:,:,:-1] = np.array(cumulative_trapezoid(X))
+
+x = np.concatenate((X,x_diff,x_int),axis=1)
+```
+
 | Parameter           | Value  |
 | ------------------- | ------ |
 | Training loss       | 0.9299 |
@@ -792,6 +808,12 @@ Accuracy at SNR = 8 is 0.8100000023841858 %
 ![png](modulation_classification_cnn/output_67_22.png)
 
 #### 1.2.2.9. Embedded Features (SNR)
+
+```python
+SNR = np.array(y[:,1]).astype(int)[:,np.newaxis,np.newaxis,np.newaxis].repeat(2,axis=-1)
+X_embed = np.concatenate((X,SNR),axis=1)
+X_embed.shape
+```
 
 | Parameter           | Value  |
 | ------------------- | ------ |
