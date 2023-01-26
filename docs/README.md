@@ -35,14 +35,15 @@
       - [1.2.3.9. Combination Raw and Integral](#1239-combination-raw-and-integral)
       - [1.2.3.10. Combination Derivative and Integral](#12310-combination-derivative-and-integral)
     - [1.2.4. LSTM model](#124-lstm-model)
-      - [1.2.4.1. Experiment 1](#1241-experiment-1)
-      - [1.2.4.2. Experiment 2](#1242-experiment-2)
-      - [1.2.4.3. Experiment 3 (final version)](#1243-experiment-3-final-version)
-      - [1.2.4.4. With First Derivative](#1244-with-first-derivative)
-      - [1.2.4.5. With Integral](#1245-with-integral)
-      - [1.2.4.6. Combination Raw and Derivative](#1246-combination-raw-and-derivative)
-      - [1.2.4.7. Combination Raw and Integral](#1247-combination-raw-and-integral)
-      - [1.2.4.8. Combination Derivative and Integral](#1248-combination-derivative-and-integral)
+      - [1.2.4.1. code](#1241-code)
+      - [1.2.4.2. Experiment 1](#1242-experiment-1)
+      - [1.2.4.3. Experiment 2](#1243-experiment-2)
+      - [1.2.4.4. Experiment 3 (final version)](#1244-experiment-3-final-version)
+      - [1.2.4.5. With First Derivative](#1245-with-first-derivative)
+      - [1.2.4.6. With Integral](#1246-with-integral)
+      - [1.2.4.7. Combination Raw and Derivative](#1247-combination-raw-and-derivative)
+      - [1.2.4.8. Combination Raw and Integral](#1248-combination-raw-and-integral)
+      - [1.2.4.9. Combination Derivative and Integral](#1249-combination-derivative-and-integral)
     - [1.2.5. Transformer Encoder Model](#125-transformer-encoder-model)
       - [1.2.5.1. Hyperparameters](#1251-hyperparameters)
       - [1.2.5.2. Combination Raw and Derivative](#1252-combination-raw-and-derivative)
@@ -1278,7 +1279,8 @@ weighted avg       0.53      0.52      0.51    360000
 ![png](img/11snr6.png)
 
 ### 1.2.4. LSTM model
-#### code
+
+#### 1.2.4.1. code
 
 ```python
 #model
@@ -1297,7 +1299,7 @@ def create_lstm(size):
 
     model = keras.Sequential()
     model.add(keras.layers.LSTM(128, input_shape=x.shape[1:]))
- 
+
 
     # for units in [128,128,64,32]:
 
@@ -1317,7 +1319,7 @@ def create_lstm2(size):
 
     model = keras.Sequential()
     model.add(keras.layers.LSTM(256, input_shape=x.shape[1:]))
- 
+
 
     # for units in [128,128,64,32]:
 
@@ -1334,7 +1336,7 @@ def create_lstm2(size):
     return model
 ```
 
-#### 1.2.4.1. Experiment 1
+#### 1.2.4.2. Experiment 1
 
 ```text
 _________________________________________________________________
@@ -1363,7 +1365,7 @@ Learning rate: 0.0009
 
 ![Experiment1 ](img/lstmexp1.PNG)
 
-#### 1.2.4.2. Experiment 2
+#### 1.2.4.3. Experiment 2
 
 ```text
 _________________________________________________________________
@@ -1399,7 +1401,7 @@ Learning rate: 0.0001
 
 ![Experiment2](img/lstmexp2.PNG)
 
-#### 1.2.4.3. Experiment 3 (final version)
+#### 1.2.4.4. Experiment 3 (final version)
 
 ```text
 Model: "sequential"
@@ -1471,7 +1473,7 @@ weighted avg       0.57      0.52      0.51    360000
 ![PNG](img/lstmexp3snr10.PNG)
 ![PNG](img/lstmexp3snr11.PNG)
 
-#### 1.2.4.4. With First Derivative
+#### 1.2.4.5. With First Derivative
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -1522,7 +1524,7 @@ weighted avg       0.28      0.31      0.27    360000
 ![PNG](img/lstmdiff10.PNG)
 ![PNG](img/lstmdiff11.PNG)
 
-#### 1.2.4.5. With Integral
+#### 1.2.4.6. With Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -1573,7 +1575,7 @@ weighted avg       0.57      0.53      0.52    360000
 ![PNG](img/lstmintsnr10.PNG)
 ![PNG](img/lstmintsnr11.PNG)
 
-#### 1.2.4.6. Combination Raw and Derivative
+#### 1.2.4.7. Combination Raw and Derivative
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -1623,7 +1625,7 @@ weighted avg       0.57      0.52      0.57    360000
 ![PNG](img/lstmrdsnr10.PNG)
 ![PNG](img/lstmrdsnr11.PNG)
 
-#### 1.2.4.7. Combination Raw and Integral
+#### 1.2.4.8. Combination Raw and Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
@@ -1673,7 +1675,7 @@ weighted avg       0.57      0.52      0.51    360000
 ![PNG](img/lstmrisnr10.PNG)
 ![PNG](img/lstmrisnr11.PNG)
 
-#### 1.2.4.8. Combination Derivative and Integral
+#### 1.2.4.9. Combination Derivative and Integral
 
 - Learning rate scheduler: step decay
 - Learning rate start: 0.0009
